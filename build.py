@@ -20,40 +20,53 @@ KITCHEN_LINES = (
     '<line x1="4" y1="24" x2="92" y2="24" stroke="var(--line)" stroke-dasharray="2,2"/>'
     '<line x1="4" y1="48" x2="92" y2="48" stroke="var(--line)" stroke-dasharray="2,2"/>'
 )
-def render_diagram(a_zone, b_zone, path, uid):
-    marker_id = f"ah-{uid}"
-    if path == "none":
+def _marker(uid, color):
+    return (
+        f'<marker id="{uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">'
+        f'<path d="M0,0 L6,3 L0,6 z" fill="{color}"/></marker>'
+    )
+
+
+def render_diagram(a_zone, b_zone, ball, move, uid):
+    ball_marker = f"ball-ah-{uid}"
+    move_marker = f"move-ah-{uid}"
+    marker_defs = []
+    if ball in ("straight", "diagonal", "lob"):
+        marker_defs.append(_marker(ball_marker, "var(--sub)"))
+    if move != "none":
+        marker_defs.append(_marker(move_marker, "var(--purple)"))
+    defs = f"<defs>{''.join(marker_defs)}</defs>" if marker_defs else ""
+
+    if ball == "none" and move == "none":
         return f'<svg viewBox="0 0 96 72" class="court-icon" aria-hidden="true">{COURT_FRAME}</svg>'
 
-    arrow_def = (
-        f'<defs><marker id="{marker_id}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">'
-        '<path d="M0,0 L6,3 L0,6 z" fill="var(--sub)"/></marker></defs>'
-    )
-    marker_url = f"url(#{marker_id})"
-
     ax, bx = 48, 48
-    if path == "diagonal":
+    if ball == "diagonal":
         ax, bx = 66, 30
-    ay = ZONE_Y_BOTTOM[a_zone]
-    by = ZONE_Y_TOP[b_zone]
+    ay = ZONE_Y_BOTTOM[a_zone] if a_zone else 36
+    by = ZONE_Y_TOP[b_zone] if b_zone else 36
 
-    extra = ""
-    if path == "lob":
+    ball_svg = ""
+    if ball == "lob":
         midx = (ax + bx) / 2
         topy = min(ay, by) - 26
-        extra = f'<path d="M{ax},{ay} Q{midx},{topy} {bx},{by}" fill="none" stroke="var(--sub)" stroke-width="2" marker-end="{marker_url}"/>'
-    elif path == "shuttle":
-        extra = f'<line x1="{bx}" y1="12" x2="{bx}" y2="30" stroke="var(--sub)" stroke-width="2" marker-end="{marker_url}" marker-start="{marker_url}"/>'
-    elif path == "advance":
-        extra = (
-            f'<line x1="{ax}" y1="60" x2="{ax}" y2="44" stroke="var(--sub)" stroke-width="2" marker-end="{marker_url}"/>'
-            f'<line x1="{ax}" y1="{ay}" x2="{bx}" y2="{by}" stroke="var(--sub)" stroke-width="1.5" stroke-dasharray="3,2" marker-end="{marker_url}"/>'
-        )
-    else:  # straight / diagonal
-        extra = f'<line x1="{ax}" y1="{ay}" x2="{bx}" y2="{by}" stroke="var(--sub)" stroke-width="2" marker-end="{marker_url}"/>'
+        ball_svg = f'<path d="M{ax},{ay} Q{midx},{topy} {bx},{by}" fill="none" stroke="var(--sub)" stroke-width="2" marker-end="url(#{ball_marker})"/>'
+    elif ball in ("straight", "diagonal"):
+        ball_svg = f'<line x1="{ax}" y1="{ay}" x2="{bx}" y2="{by}" stroke="var(--sub)" stroke-width="2" marker-end="url(#{ball_marker})"/>'
+
+    move_svg = ""
+    if move != "none":
+        who, kind = move.split("-")
+        x = ax if who == "a" else bx
+        zone_map = ZONE_Y_BOTTOM if who == "a" else ZONE_Y_TOP
+        y_kitchen, y_baseline = zone_map["kitchen"], zone_map["baseline"]
+        if kind == "advance":
+            move_svg = f'<line x1="{x}" y1="{y_baseline}" x2="{x}" y2="{y_kitchen}" stroke="var(--purple)" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#{move_marker})"/>'
+        else:  # shuttle
+            move_svg = f'<line x1="{x}" y1="{y_kitchen}" x2="{x}" y2="{y_baseline}" stroke="var(--purple)" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#{move_marker})" marker-start="url(#{move_marker})"/>'
 
     dots = f'<circle cx="{ax}" cy="{ay}" r="5" fill="var(--accent)"/><circle cx="{bx}" cy="{by}" r="5" fill="var(--teal)"/>'
-    return f'<svg viewBox="0 0 96 72" class="court-icon" aria-hidden="true">{arrow_def}{COURT_FRAME}{KITCHEN_LINES}{extra}{dots}</svg>'
+    return f'<svg viewBox="0 0 96 72" class="court-icon" aria-hidden="true">{defs}{COURT_FRAME}{KITCHEN_LINES}{move_svg}{ball_svg}{dots}</svg>'
 
 
 def minutes_of(label):
@@ -67,7 +80,7 @@ def build_index(data, css, env, output_dir, sessions):
     for cat in data["categories"]:
         for drill in cat["drills"]:
             d = drill["diagram"]
-            drill["diagram_svg"] = render_diagram(d["a"], d["b"], d["path"], drill["id"])
+            drill["diagram_svg"] = render_diagram(d["a"], d["b"], d["ball"], d["move"], drill["id"])
 
     template = env.get_template("page.html.jinja")
     html = template.render(

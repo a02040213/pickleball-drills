@@ -14,7 +14,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 雙方皆站在廚房線（Kitchen Line），以斜線丁克開始。
     - 第一種模式：雙方只能打斜線。
@@ -29,7 +30,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 雙方皆站在廚房線，以斜線丁克開始。
     - 第一組先使用正拍進行丁克，另一組先使用反拍。
@@ -44,7 +46,8 @@ categories:
     diagram:
       a: kitchen
       b: transition
-      path: shuttle
+      ball: straight
+      move: b-shuttle
     method:
     - A 固定站在廚房線，B 從廚房線開始。
     - B 每完成三顆丁克，就向後退一步。
@@ -65,7 +68,8 @@ categories:
     diagram:
       a: baseline
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - A 站在底線，B 站在廚房線。
     - A 從底線打長丁克，B 在廚房線以截擊方式回球。
@@ -79,7 +83,8 @@ categories:
     diagram:
       a: baseline
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - A 站在底線，B 站在廚房線。
     - A 從底線進行 Drive，B 在廚房線以不落地截擊（Volley）回球。
@@ -93,7 +98,8 @@ categories:
     diagram:
       a: transition
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - A 站在過渡區，B 站在廚房線。
     - A 從過渡區練習 Reset。
@@ -108,7 +114,8 @@ categories:
     diagram:
       a: baseline
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - A 站在底線，B 站在廚房線。
     - A 依照來球狀況，選擇打長丁克或 Drop。
@@ -123,7 +130,8 @@ categories:
     diagram:
       a: baseline
       b: kitchen
-      path: advance
+      ball: straight
+      move: a-advance
     method:
     - A 站在底線，B 站在廚房線。
     - B 負責餵球，透過 Drive、Drop、Speed Up 等不同球路施加壓力。
@@ -144,7 +152,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方皆站在廚房線。
     - 以快速截擊互相對打，練習近距離快手反應。
@@ -159,7 +168,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方皆站在網前進行截擊對打。
     - 使用約 60–75% 的力量，不刻意追求致勝球。
@@ -175,7 +185,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 雙方進行中性丁克對打。
     - 其中一人刻意打出一顆較高、容易被攻擊的死丁克。
@@ -192,7 +203,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方皆站在廚房線，從一般丁克開始。
     - 在適當時機主動進行 Speed Up。
@@ -213,7 +225,8 @@ categories:
     diagram:
       a: baseline
       b: kitchen
-      path: lob
+      ball: lob
+      move: none
     method:
     - A 站在底線，B 站在廚房線。
     - A 先餵出一顆高球，B 進行 Overhead 攻擊。
@@ -228,7 +241,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: lob
+      ball: lob
+      move: none
     method:
     - 雙方先進行正常丁克對打。
     - 輪流在適當時機突然打出 Lob。
@@ -244,7 +258,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 雙方先設定角色：一人為 Initiator，另一人為 Defender。
     - Initiator 可以在任何時機主動進攻，包括失去平衡時或空中截擊。
@@ -259,7 +274,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 雙方先透過合作餵球建立對打。
     - 當其中一人認為自己即將打出致勝球時，必須在擊球前喊出「Winner」。
@@ -282,7 +298,8 @@ categories:
     diagram:
       a: baseline
       b: baseline
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方起始位置皆在底線外側，靠近邊線處。
     - 每次擊球前，先快速移動進入場內。
@@ -298,7 +315,8 @@ categories:
     diagram:
       a: baseline
       b: baseline
-      path: straight
+      ball: straight
+      move: none
     method:
     - 從發球開始，依序完成：發球（Serve）→ 接發球（Return）→ 第三拍 Drop → 第四拍 Speed Up → 第五拍 Reset。
     - 依照預定的球路與節奏完成前五拍。
@@ -317,7 +335,8 @@ categories:
     diagram:
       a: null
       b: null
-      path: none
+      ball: none
+      move: none
     method:
     - 依照 7-11 的既定比賽規則進行。
     - 透過指定得分制度，練習在有限分數與壓力下完成攻防。
@@ -331,7 +350,8 @@ categories:
     diagram:
       a: baseline
       b: baseline
-      path: diagonal
+      ball: diagonal
+      move: none
     method:
     - 使用半場進行雙人對抗。
     - 雙方分別進行斜線對打，將單打場地分成兩組獨立的斜線對抗區。
@@ -346,7 +366,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方皆站在廚房線。
     - 固定採用以下節奏：連續三顆 Dink → 第四顆 Speed Up → 第五顆 Reset → 重新回到三顆 Dink，持續循環。
@@ -361,7 +382,8 @@ categories:
     diagram:
       a: kitchen
       b: kitchen
-      path: straight
+      ball: straight
+      move: none
     method:
     - 雙方從廚房線開始，以丁克對打。
     - 依照實際來球與攻擊機會，自由選擇 Speed Up。

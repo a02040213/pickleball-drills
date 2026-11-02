@@ -24,6 +24,15 @@
 </section>
 {% endif %}
 
+<section class="legend">
+  <h2>圖示說明</h2>
+  <ul>
+    <li><span class="swatch dot a"></span>綠點＝球員 A，<span class="swatch dot b"></span>藍點＝球員 B（位置由近到遠：廚房線 → 過渡區 → 底線）</li>
+    <li><span class="swatch line ball"></span>灰色線（直線／斜線／弧線）＝球路方向</li>
+    <li><span class="swatch line move"></span>紫色虛線＝該球員的站位移動方向（非球路）</li>
+  </ul>
+</section>
+
 <nav class="jump">
   {% for cat in categories %}
   <a href="#cat-{{ cat.code }}">{{ cat.code }} {{ cat.title_zh }}</a>
@@ -44,20 +53,24 @@
   {% for drill in cat.drills %}
   <details class="drill" id="drill-{{ drill.id }}">
     <summary class="drill-head">
-      {{ drill.diagram_svg | safe }}
       <span class="num">{{ drill.id }}</span>
       <h3>{{ drill.title_zh }}</h3>
       <span class="en">{{ drill.title_en }}</span>
     </summary>
-    <h4>訓練方式</h4>
-    <ul>
-      {% for line in drill.method %}<li>{{ line }}</li>{% endfor %}
-    </ul>
-    <h4>訓練重點</h4>
-    <ul>
-      {% for line in drill.points %}<li>{{ line }}</li>{% endfor %}
-    </ul>
-    {% if drill.note %}<p class="note">{{ drill.note }}</p>{% endif %}
+    <div class="drill-body">
+      <div class="drill-diagram">{{ drill.diagram_svg | safe }}</div>
+      <div class="drill-text">
+        <h4>訓練方式</h4>
+        <ul>
+          {% for line in drill.method %}<li>{{ line }}</li>{% endfor %}
+        </ul>
+        <h4>訓練重點</h4>
+        <ul>
+          {% for line in drill.points %}<li>{{ line }}</li>{% endfor %}
+        </ul>
+        {% if drill.note %}<p class="note">{{ drill.note }}</p>{% endif %}
+      </div>
+    </div>
   </details>
   {% endfor %}
 </section>
