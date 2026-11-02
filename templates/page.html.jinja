@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ site.title }}</title>
+<style>{{ css | safe }}</style>
+</head><body>
+<div class="wrap">
+
+<div class="hero">
+  <p class="kicker">{{ site.title_en }}</p>
+  <h1>{{ site.title }}</h1>
+  <p>{{ site.subtitle }}</p>
+</div>
+
+<nav class="jump">
+  {% for cat in categories %}
+  <a href="#cat-{{ cat.code }}">{{ cat.code }} {{ cat.title_zh }}</a>
+  {% endfor %}
+  <a href="#schedule">建議課表</a>
+  <a href="#optimizations">優化方向</a>
+</nav>
+
+{% for cat in categories %}
+<section class="category" id="cat-{{ cat.code }}">
+  <div class="category-head">
+    <span class="code">{{ cat.code }}</span>
+    <h2>{{ cat.title_zh }}</h2>
+    <span class="en">{{ cat.title_en }}</span>
+  </div>
+  <p class="category-focus">訓練重點：{{ cat.focus }}</p>
+
+  {% for drill in cat.drills %}
+  <article class="drill" id="drill-{{ drill.id }}">
+    <div class="drill-head">
+      <span class="num">{{ drill.id }}</span>
+      <h3>{{ drill.title_zh }}</h3>
+      <span class="en">{{ drill.title_en }}</span>
+    </div>
+    <h4>訓練方式</h4>
+    <ul>
+      {% for line in drill.method %}<li>{{ line }}</li>{% endfor %}
+    </ul>
+    <h4>訓練重點</h4>
+    <ul>
+      {% for line in drill.points %}<li>{{ line }}</li>{% endfor %}
+    </ul>
+    {% if drill.note %}<p class="note">{{ drill.note }}</p>{% endif %}
+  </article>
+  {% endfor %}
+</section>
+{% endfor %}
+
+<section class="panel" id="schedule">
+  <h2>{{ schedule.title }}</h2>
+  <p class="intro">{{ schedule.intro }}</p>
+  <ol class="phase-list">
+    {% for phase in schedule.phases %}
+    <li>
+      <span class="time">{{ phase.time }}</span>
+      <span>
+        <span class="name">{{ phase.name }}</span>
+        <span class="drills">{{ phase.drills }}</span>
+      </span>
+    </li>
+    {% endfor %}
+  </ol>
+  <p class="total">建議總訓練時間：<b>{{ schedule.total }}</b></p>
+</section>
+
+<section class="panel" id="optimizations">
+  <h2>{{ optimizations.title }}</h2>
+  {% for item in optimizations.entries %}
+  <div class="opt-item">
+    <h3>{{ loop.index }}. {{ item.title }}</h3>
+    {% if item.body %}
+    <ul>
+      {% for line in item.body %}<li>{{ line }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if item.closing %}<p class="closing">{{ item.closing }}</p>{% endif %}
+    {% if item.table %}
+    <table class="spec-table">
+      {% for row in item.table %}
+      <tr><th>{{ row.field }}</th><td>{{ row.content }}</td></tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>
+
+<p class="footer">匹克球雙人訓練菜單</p>
+</div>
+</body></html>

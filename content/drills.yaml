@@ -1,0 +1,344 @@
+site:
+  title: 匹克球雙人訓練菜單
+  title_en: "Pickleball Doubles Training Drills"
+  subtitle: 22 個分類訓練項目，外加建議課表與未來優化方向
+
+categories:
+  - code: "01"
+    title_zh: 丁克與控球
+    title_en: "Dink & Control"
+    focus: 建立丁克穩定性、方向控制、正反拍切換，以及在網前控制球速與落點的能力。
+    drills:
+      - id: 1
+        title_zh: 限制丁克
+        title_en: "Restricted Dink"
+        method:
+          - 雙方皆站在廚房線（Kitchen Line），以斜線丁克開始。
+          - 第一種模式：雙方只能打斜線。
+          - 第二種模式：一人只能打直線，另一人只能打斜線，使用半場進行訓練。
+        points:
+          - 控制丁克的高度、深度與落點。
+          - 建立固定方向的控球能力。
+          - 練習在有限擊球選擇下維持穩定性。
+      - id: 2
+        title_zh: 正反拍交叉丁克
+        title_en: "Forehand / Backhand Cross Dink"
+        method:
+          - 雙方皆站在廚房線，以斜線丁克開始。
+          - 第一組先使用正拍進行丁克，另一組先使用反拍。
+          - 完成一輪後交換正反拍角色。
+        points:
+          - 分別建立正拍與反拍丁克的穩定性。
+          - 練習不同擊球面的觸球感與落點控制。
+          - 提升反拍丁克的穩定度。
+      - id: 3
+        title_zh: 伸縮丁克
+        title_en: "Slinky"
+        method:
+          - A 固定站在廚房線，B 從廚房線開始。
+          - B 每完成三顆丁克，就向後退一步。
+          - 持續退至底線後，再每三顆丁克向前移動一步，直到回到廚房線。
+          - 完成後交換角色。
+        points:
+          - 練習不同場地位置的丁克控制。
+          - 建立前後移動時的擊球穩定性。
+          - 練習移動後快速恢復平衡與擊球準備。
+
+  - code: "02"
+    title_zh: 攻防轉換與過渡
+    title_en: "Transition & Reset"
+    focus: 練習從底線、過渡區逐步推進至廚房線，並熟悉 Drop、Reset、Drive 等不同擊球方式的使用時機。
+    drills:
+      - id: 4
+        title_zh: 長丁克對截擊
+        title_en: "Deep Dink vs. Volley"
+        method:
+          - A 站在底線，B 站在廚房線。
+          - A 從底線打長丁克，B 在廚房線以截擊方式回球。
+          - 雙方持續進行攻防練習。
+        points:
+          - "A：練習長丁克的深度與落點控制。"
+          - "B：練習網前截擊的穩定性與方向控制。"
+      - id: 5
+        title_zh: 抽球對截擊
+        title_en: "Drive vs. Volley"
+        method:
+          - A 站在底線，B 站在廚房線。
+          - A 從底線進行 Drive，B 在廚房線以不落地截擊（Volley）回球。
+          - 雙方持續對打。
+        points:
+          - "A：練習 Drive 的速度、深度與攻擊角度。"
+          - "B：練習面對底線強力抽球時的截擊與控球能力。"
+      - id: 6
+        title_zh: Reset 對截擊
+        title_en: "Reset vs. Volley"
+        method:
+          - A 站在過渡區，B 站在廚房線。
+          - A 從過渡區練習 Reset。
+          - B 在廚房線稍微施加壓力，透過穩定截擊讓 A 持續練習 Reset。
+          - 雙方持續進行攻防。
+        points:
+          - "A：練習在受壓情況下柔化來球，將球穩定送入廚房區。"
+          - "B：練習控制截擊力道與落點，持續維持適當壓力。"
+      - id: 7
+        title_zh: 後場多球對截擊
+        title_en: "Deep Ball & Drop vs. Volley"
+        method:
+          - A 站在底線，B 站在廚房線。
+          - A 依照來球狀況，選擇打長丁克或 Drop。
+          - B 在廚房線進行回球。
+          - 雙方持續對打。
+        points:
+          - "A：練習不同球路的選擇與後場控球。"
+          - "B：練習面對不同球速、弧線與落點時的網前處理能力。"
+      - id: 8
+        title_zh: 逐步上網
+        title_en: "Work-Up"
+        method:
+          - A 站在底線，B 站在廚房線。
+          - B 負責餵球，透過 Drive、Drop、Speed Up 等不同球路施加壓力。
+          - A 必須運用 Drop 或 Reset，逐步從底線推進至廚房線。
+          - A 成功抵達廚房線後，雙方正式開始該分的對抗。
+        points:
+          - 練習從底線推進至廚房線的完整過渡過程。
+          - 判斷何時適合 Drop、何時需要 Reset。
+          - 練習移動中保持低重心與擊球平衡。
+
+  - code: "03"
+    title_zh: 截擊與快手
+    title_en: "Volley & Fast Hands"
+    focus: 提升網前反應速度、截擊手感、拍面控制及近距離快速攻防能力。
+    drills:
+      - id: 9
+        title_zh: 快手對截擊
+        title_en: "Fast Hands vs. Volley"
+        method:
+          - 雙方皆站在廚房線。
+          - 以快速截擊互相對打，練習近距離快手反應。
+          - 可設定攻擊目標為對方髖部。
+        points:
+          - 提升反應速度與手眼協調。
+          - 練習快速切換正反拍。
+          - 建立近距離攻防的穩定性。
+      - id: 10
+        title_zh: 截擊手感控制
+        title_en: "Volley Hands Control"
+        method:
+          - 雙方皆站在網前進行截擊對打。
+          - 使用約 60–75% 的力量，不刻意追求致勝球。
+          - 以維持球不落地、穩定來回為主要目標。
+          - 拍面保持穩定，擊球位置盡量維持在肩膀前方。
+        points:
+          - 建立截擊的觸球手感。
+          - 練習控制拍面角度與擊球力道。
+          - 減少過度揮拍，建立緊湊的截擊動作。
+      - id: 11
+        title_zh: 死丁克快手
+        title_en: "Dead Dink Hands"
+        method:
+          - 雙方進行中性丁克對打。
+          - 其中一人刻意打出一顆較高、容易被攻擊的死丁克。
+          - 另一人抓住機會進行 Speed Up。
+          - 之後雙方進入快手對抗，直到該分結束。
+          - 可加入計分制度，增加比賽壓力。
+        points:
+          - 練習辨識可攻擊的丁克。
+          - 建立由防守轉為進攻的反應。
+          - 練習 Speed Up 後的快手銜接。
+      - id: 12
+        title_zh: 丁克、加速與擋球
+        title_en: "Dink, Speed Up & Block"
+        method:
+          - 雙方皆站在廚房線，從一般丁克開始。
+          - 在適當時機主動進行 Speed Up。
+          - 對方練習使用 Block 穩定擋回。
+          - 雙方輪流練習進攻與防守。
+        points:
+          - 練習從丁克轉換為 Speed Up 的時機。
+          - 建立 Speed Up 的方向與速度控制。
+          - 練習面對加速球時的拍面穩定與 Block 技巧。
+
+  - code: "04"
+    title_zh: 進攻與防守情境
+    title_en: "Attack & Defense Scenarios"
+    focus: 模擬實際比賽中的攻防局面，練習攻擊選擇、防守反應，以及面對不同球路時的決策能力。
+    drills:
+      - id: 13
+        title_zh: 高球攻擊對底線防守
+        title_en: "Overhead vs. Baseline Defense"
+        method:
+          - A 站在底線，B 站在廚房線。
+          - A 先餵出一顆高球，B 進行 Overhead 攻擊。
+          - 隨後 A 練習底線防守，B 持續進攻。
+          - 雙方持續對打，直到該分結束。
+        points:
+          - "A：練習面對 Overhead 時的預判、站位與防守能力。"
+          - "B：練習 Overhead 攻擊後的連續進攻與落點控制。"
+      - id: 14
+        title_zh: 挑球追球
+        title_en: "Lob Retrieval"
+        method:
+          - 雙方先進行正常丁克對打。
+          - 輪流在適當時機突然打出 Lob。
+          - 接球方先讓球落地，再快速回追並將球打回。
+          - 雙方繼續完成該分。
+        points:
+          - 練習辨識 Lob 的時機與落點。
+          - 建立轉身、回追及重新定位的腳步能力。
+          - 練習在被迫離開網前後重新組織防守。
+      - id: 15
+        title_zh: 主動進攻方
+        title_en: "Initiator"
+        method:
+          - 雙方先設定角色：一人為 Initiator，另一人為 Defender。
+          - Initiator 可以在任何時機主動進攻，包括失去平衡時或空中截擊。
+          - Defender 以防守與反擊為主。
+          - 一分結束後交換角色。
+        points:
+          - "Initiator：練習進攻意識、出手時機與主動創造機會。"
+          - "Defender：練習預判、化解攻勢及防守反擊。"
+      - id: 16
+        title_zh: 勝利球判斷
+        title_en: "Winner"
+        method:
+          - 雙方先透過合作餵球建立對打。
+          - 當其中一人認為自己即將打出致勝球時，必須在擊球前喊出「Winner」。
+          - 喊出 Winner 且成功得分，加 1 分。
+          - 喊出 Winner 但未能得分，扣 1 分。
+          - 沒有喊 Winner 就得分，不計分。
+          - 先達到 7 分者獲勝。
+        points:
+          - 練習辨識真正的進攻機會。
+          - 培養對球路、對手位置及空檔的判斷能力。
+          - 避免在不適合的時機勉強進攻。
+
+  - code: "05"
+    title_zh: 腳步與移動能力
+    title_en: "Footwork & Movement"
+    focus: 建立正確的移動節奏、擊球平衡、重心控制及移動中的穩定性。
+    drills:
+      - id: 17
+        title_zh: 抽球腳步練習
+        title_en: "Drive Footwork Drill"
+        method:
+          - 雙方起始位置皆在底線外側，靠近邊線處。
+          - 每次擊球前，先快速移動進入場內。
+          - 以約 60% 力量進行 Drive，目標為對方後場中央的指定區域或目標物。
+          - 雙方持續來回抽球。
+        points:
+          - 練習進場、擊球與回位的移動節奏。
+          - 建立移動中的擊球平衡。
+          - 提升 Drive 的穩定性與落點控制。
+      - id: 18
+        title_zh: 前五拍練習
+        title_en: "First Five Shots"
+        method:
+          - "從發球開始，依序完成：發球（Serve）→ 接發球（Return）→ 第三拍 Drop → 第四拍 Speed Up → 第五拍 Reset。"
+          - 依照預定的球路與節奏完成前五拍。
+        points:
+          - 建立發接發後的攻防銜接。
+          - 練習第三拍 Drop 的穩定性。
+          - 熟悉加速與 Reset 之間的攻防轉換。
+
+  - code: "06"
+    title_zh: 綜合對抗與比賽訓練
+    title_en: "Game & Competitive Drills"
+    focus: 將技術應用於連續對抗，建立比賽節奏、策略判斷及實戰應變能力。
+    drills:
+      - id: 19
+        title_zh: 7-11
+        title_en: "7-11"
+        method:
+          - 依照 7-11 的既定比賽規則進行。
+          - 透過指定得分制度，練習在有限分數與壓力下完成攻防。
+        points:
+          - 熟悉比賽節奏與得分壓力。
+          - 練習不同比分下的策略選擇。
+        note: 原始資料未附具體玩法規則，先保留名稱，避免誤植規則。
+      - id: 20
+        title_zh: Dingles
+        title_en: "Dingles"
+        method:
+          - 使用半場進行雙人對抗。
+          - 雙方分別進行斜線對打，將單打場地分成兩組獨立的斜線對抗區。
+          - 透過連續對打及攻防轉換進行練習。
+        points:
+          - 練習單打斜線對抗。
+          - 建立連續擊球與攻防轉換能力。
+          - 提升在有限場地中的控球與決策能力。
+      - id: 21
+        title_zh: 丁克丁克 Bang
+        title_en: "Dink Dink Bang"
+        method:
+          - 雙方皆站在廚房線。
+          - "固定採用以下節奏：連續三顆 Dink → 第四顆 Speed Up → 第五顆 Reset → 重新回到三顆 Dink，持續循環。"
+          - 即使中途出現失誤，也依照預定節奏繼續練習，不中斷循環。
+        points:
+          - 建立固定節奏下的攻防轉換能力。
+          - 練習 Speed Up 後的 Reset 銜接。
+          - 培養對固定戰術節奏的熟悉度。
+      - id: 22
+        title_zh: 綜合攻防對抗
+        title_en: "Dink to Speed Up to Hands"
+        method:
+          - 雙方從廚房線開始，以丁克對打。
+          - 依照實際來球與攻擊機會，自由選擇 Speed Up。
+          - 對方練習 Block 或反擊，雙方進入快手對抗。
+          - 持續進行至該分結束。
+        points:
+          - 將丁克、Speed Up、Block 與快手串聯。
+          - 練習實戰中的攻擊時機判斷。
+          - 建立從中性球轉為攻防對抗的能力。
+        note: 此項是依照原本的「Dink、Speed up、Block」內容重新整理出的綜合版本，與第 12 項的技術分解練習用途不同。
+
+schedule:
+  title: 建議的實際課表編排
+  intro: 如果這份資料是要拿來安排雙人訓練，建議不要單純照技術分類練習，而是依照球員在比賽中的實際發展順序安排。
+  phases:
+    - time: 10–15 分鐘
+      name: 暖身與控球
+      drills: 限制丁克、正反拍 Cross Dink、Volley Hands Control
+    - time: 10–15 分鐘
+      name: 攻擊技術
+      drills: "Dink Dink Bang、Dead Dink Hands、Dink / Speed Up / Block"
+    - time: 15–20 分鐘
+      name: 過渡與移動
+      drills: Work-Up、Reset vs. Volley、Drive Footwork、Slinky
+    - time: 15–20 分鐘
+      name: 攻防情境
+      drills: Overhead Defense、Lob Retrieval、Initiator
+    - time: 10–15 分鐘
+      name: 實戰對抗
+      drills: Dingles、7-11、Winner
+  total: 60–85 分鐘
+
+optimizations:
+  title: 未來優化方向
+  entries:
+    - title: 區分「固定技術訓練」與「隨機情境訓練」
+      body:
+        - "固定技術：限制丁克、Drive vs. Volley、Volley Hands Control。"
+        - "隨機情境：Initiator、Lob Retrieval、Winner。"
+      closing: 固定技術建立動作與穩定性，隨機情境培養比賽判斷力。兩種訓練都很重要。
+    - title: 每個項目加入難度等級
+      body:
+        - "Level 1：固定球路、固定站位。"
+        - "Level 2：加入方向變化及移動。"
+        - "Level 3：加入隨機球路與主動決策。"
+        - "Level 4：加入計分及實戰壓力。"
+    - title: 建立每個 Drill 的標準紀錄格式
+      table:
+        - field: Drill 名稱
+          content: 中英文名稱
+        - field: 訓練目的
+          content: 要提升的能力
+        - field: 人數
+          content: 2 人／4 人
+        - field: 訓練站位
+          content: 底線／過渡區／廚房線
+        - field: 訓練時間
+          content: 5–10 分鐘
+        - field: 難度
+          content: Level 1–4
+        - field: 成功標準
+          content: 穩定度、命中率、成功次數
