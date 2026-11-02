@@ -13,6 +13,17 @@
   <p>{{ site.subtitle }}</p>
 </div>
 
+{% if sessions %}
+<section class="sessions-nav">
+  <h2>單日課表</h2>
+  <ul>
+    {% for s in sessions %}
+    <li><a href="schedule/{{ s.date }}.html">{{ s.label }} 課表</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 <nav class="jump">
   {% for cat in categories %}
   <a href="#cat-{{ cat.code }}">{{ cat.code }} {{ cat.title_zh }}</a>
@@ -31,12 +42,13 @@
   <p class="category-focus">訓練重點：{{ cat.focus }}</p>
 
   {% for drill in cat.drills %}
-  <article class="drill" id="drill-{{ drill.id }}">
-    <div class="drill-head">
+  <details class="drill" id="drill-{{ drill.id }}">
+    <summary class="drill-head">
+      {{ drill.diagram_svg | safe }}
       <span class="num">{{ drill.id }}</span>
       <h3>{{ drill.title_zh }}</h3>
       <span class="en">{{ drill.title_en }}</span>
-    </div>
+    </summary>
     <h4>訓練方式</h4>
     <ul>
       {% for line in drill.method %}<li>{{ line }}</li>{% endfor %}
@@ -46,7 +58,7 @@
       {% for line in drill.points %}<li>{{ line }}</li>{% endfor %}
     </ul>
     {% if drill.note %}<p class="note">{{ drill.note }}</p>{% endif %}
-  </article>
+  </details>
   {% endfor %}
 </section>
 {% endfor %}
@@ -90,6 +102,6 @@
   {% endfor %}
 </section>
 
-<p class="footer">匹克球雙人訓練菜單</p>
+<p class="footer">課表大總表</p>
 </div>
 </body></html>

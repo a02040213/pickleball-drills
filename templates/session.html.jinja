@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>匹克球課表（{{ session.label }}）</title>
+<style>{{ css | safe }}</style>
+</head><body>
+<div class="wrap wrap-narrow">
+
+<p class="back-link"><a href="../index.html">← 回課表大總表</a></p>
+
+<div class="hero">
+  <p class="kicker">Session Schedule</p>
+  <h1>匹克球課表（{{ session.label }}）</h1>
+</div>
+
+<section class="session-block warmup">
+  <span class="time">{{ session.warmup.duration }}</span>
+  <span class="name">熱身：{{ session.warmup.note }}</span>
+</section>
+
+<p class="rotation-note">{{ session.rotation_note }}</p>
+
+<ol class="session-list">
+  {% for block in session.blocks %}
+  <li class="session-block">
+    {% if block.duration %}<span class="time">{{ block.duration }}</span>{% endif %}
+    <div class="session-block-body">
+      <span class="name">{{ block.title }}</span>
+      <p class="note">{{ block.note }}</p>
+      {% if block.drill_id %}<a class="detail-link" href="../index.html#drill-{{ block.drill_id }}">看完整動作說明 →</a>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if session.total %}<p class="total">預估總時長：<b>{{ session.total }}</b></p>{% endif %}
+
+</div>
+</body></html>

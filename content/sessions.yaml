@@ -1,0 +1,41 @@
+sessions:
+  - date: "2026-11-06"
+    label: "11/6"
+    warmup:
+      duration: 10 分鐘
+      note: 兩兩一組熱身
+    rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
+    blocks:
+      - duration: 40 分鐘
+        title: 正反拍 Cross Dink
+        drill_id: 2
+        note: 兩人皆站在廚房線上開始，打斜線丁克；一組先打正拍，一組先打反拍，打完兩組交換。
+      - duration: 20 分鐘
+        title: 長丁 vs 截擊
+        drill_id: 4
+        note: 一人站在底線打長丁，一人站在廚房線打不落地回球。
+      - duration: 20 分鐘
+        title: Reset vs 截擊
+        drill_id: 6
+        note: 一人站在過渡區打 Reset，一人站在廚房線稍微做加壓。
+      - duration: 20 分鐘
+        title: Overhead vs 底線防守
+        drill_id: 13
+        note: 一人站在底線，一人站在廚房線；底線的人開一個高球，另一人先打一個 overhead，後續後場的人練防守、前場的人練攻擊。
+
+  - date: "2026-11-13"
+    label: "11/13"
+    warmup:
+      duration: 10 分鐘
+      note: 兩兩一組熱身
+    rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
+    blocks:
+      - title: Volley 手感控制（Volley Hands Control）
+        drill_id: 10
+        note: 兩人在網前以 60–75% 力量截擊，只求球不落地、不求致勝；手拍保持緊湊，放在肩膀前方。
+      - title: 後場 vs 截擊
+        drill_id: 7
+        note: 一人站在底線視狀況打長丁或 drop，一人站在廚房線回球。
+      - title: 前五拍練習
+        drill_id: 18
+        note: 發、接發、drop、加速、reset。
