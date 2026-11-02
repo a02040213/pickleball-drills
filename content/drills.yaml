@@ -11,6 +11,7 @@ categories:
   - id: 1
     title_zh: 限制丁克
     title_en: Restricted Dink
+    diagram_file: diagrams/drill-01.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -27,6 +28,7 @@ categories:
   - id: 2
     title_zh: 正反拍交叉丁克
     title_en: Forehand / Backhand Cross Dink
+    diagram_file: diagrams/drill-02.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -43,6 +45,7 @@ categories:
   - id: 3
     title_zh: 伸縮丁克
     title_en: Slinky
+    diagram_file: diagrams/drill-03.svg
     diagram:
       a: kitchen
       b: transition
@@ -65,6 +68,7 @@ categories:
   - id: 4
     title_zh: 長丁克對截擊
     title_en: Deep Dink vs. Volley
+    diagram_file: diagrams/drill-04.svg
     diagram:
       a: baseline
       b: kitchen
@@ -80,6 +84,7 @@ categories:
   - id: 5
     title_zh: 抽球對截擊
     title_en: Drive vs. Volley
+    diagram_file: diagrams/drill-05.svg
     diagram:
       a: baseline
       b: kitchen
@@ -95,6 +100,7 @@ categories:
   - id: 6
     title_zh: Reset 對截擊
     title_en: Reset vs. Volley
+    diagram_file: diagrams/drill-06.svg
     diagram:
       a: transition
       b: kitchen
@@ -111,6 +117,7 @@ categories:
   - id: 7
     title_zh: 後場多球對截擊
     title_en: Deep Ball & Drop vs. Volley
+    diagram_file: diagrams/drill-07.svg
     diagram:
       a: baseline
       b: kitchen
@@ -127,6 +134,7 @@ categories:
   - id: 8
     title_zh: 逐步上網
     title_en: Work-Up
+    diagram_file: diagrams/drill-08.svg
     diagram:
       a: baseline
       b: kitchen
@@ -149,6 +157,7 @@ categories:
   - id: 9
     title_zh: 快手對截擊
     title_en: Fast Hands vs. Volley
+    diagram_file: diagrams/drill-09.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -165,6 +174,7 @@ categories:
   - id: 10
     title_zh: 截擊手感控制
     title_en: Volley Hands Control
+    diagram_file: diagrams/drill-10.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -182,6 +192,7 @@ categories:
   - id: 11
     title_zh: 死丁克快手
     title_en: Dead Dink Hands
+    diagram_file: diagrams/drill-11.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -200,6 +211,7 @@ categories:
   - id: 12
     title_zh: 丁克、加速與擋球
     title_en: Dink, Speed Up & Block
+    diagram_file: diagrams/drill-12.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -222,6 +234,7 @@ categories:
   - id: 13
     title_zh: 高球攻擊對底線防守
     title_en: Overhead vs. Baseline Defense
+    diagram_file: diagrams/drill-13.svg
     diagram:
       a: baseline
       b: kitchen
@@ -238,6 +251,7 @@ categories:
   - id: 14
     title_zh: 挑球追球
     title_en: Lob Retrieval
+    diagram_file: diagrams/drill-14.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -255,6 +269,7 @@ categories:
   - id: 15
     title_zh: 主動進攻方
     title_en: Initiator
+    diagram_file: diagrams/drill-15.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -271,6 +286,7 @@ categories:
   - id: 16
     title_zh: 勝利球判斷
     title_en: Winner
+    diagram_file: diagrams/drill-16.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -295,6 +311,7 @@ categories:
   - id: 17
     title_zh: 抽球腳步練習
     title_en: Drive Footwork Drill
+    diagram_file: diagrams/drill-17.svg
     diagram:
       a: baseline
       b: baseline
@@ -312,6 +329,7 @@ categories:
   - id: 18
     title_zh: 前五拍練習
     title_en: First Five Shots
+    diagram_file: diagrams/drill-18.svg
     diagram:
       a: baseline
       b: baseline
@@ -347,6 +365,7 @@ categories:
   - id: 20
     title_zh: Dingles
     title_en: Dingles
+    diagram_file: diagrams/drill-20.svg
     diagram:
       a: baseline
       b: baseline
@@ -363,6 +382,7 @@ categories:
   - id: 21
     title_zh: 丁克丁克 Bang
     title_en: Dink Dink Bang
+    diagram_file: diagrams/drill-21.svg
     diagram:
       a: kitchen
       b: kitchen
@@ -379,6 +399,7 @@ categories:
   - id: 22
     title_zh: 綜合攻防對抗
     title_en: Dink to Speed Up to Hands
+    diagram_file: diagrams/drill-22.svg
     diagram:
       a: kitchen
       b: kitchen

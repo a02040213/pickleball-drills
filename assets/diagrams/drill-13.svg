@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2.5 -22.5 49 28" width="784" height="448" role="img" aria-label="高球攻擊對底線防守 Overhead vs. Baseline Defense" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif">
+<title>高球攻擊對底線防守 Overhead vs. Baseline Defense</title>
+<metadata>{
+ "format": "drill-diagram",
+ "version": 1,
+ "title": "高球攻擊對底線防守 Overhead vs. Baseline Defense",
+ "caption": "",
+ "view": "full",
+ "side": "bottom",
+ "orient": "landscape",
+ "legend": [
+  {
+   "color": "yellow",
+   "text": "第 1 顆為餵高球，第 2 顆為 Overhead 扣殺"
+  }
+ ],
+ "items": [
+  {
+   "type": "player",
+   "x": 10,
+   "y": 41,
+   "label": "A",
+   "team": "orange"
+  },
+  {
+   "type": "player",
+   "x": 10,
+   "y": 14,
+   "label": "B",
+   "team": "blue"
+  },
+  {
+   "type": "ball",
+   "x1": 10,
+   "y1": 41,
+   "x2": 10,
+   "y2": 14,
+   "curve": true,
+   "bend": 1,
+   "n": 1
+  },
+  {
+   "type": "ball",
+   "x1": 10,
+   "y1": 14,
+   "x2": 10,
+   "y2": 41,
+   "curve": false,
+   "bend": 1,
+   "n": 2
+  },
+  {
+   "type": "ball",
+   "x1": 10,
+   "y1": 41,
+   "x2": 10,
+   "y2": 14,
+   "curve": true,
+   "bend": -1,
+   "n": 3,
+   "dash": true
+  }
+ ]
+}</metadata>
+<rect x="-2.5" y="-22.5" width="49" height="28" fill="#ffffff"/>
+<g transform="rotate(-90)"><rect x="-2.5" y="-2.5" width="25" height="49" fill="#3d7a4a"/><rect x="0" y="0" width="20" height="44" fill="#2b6ca3"/><rect x="0" y="15" width="20" height="7" fill="#1f5788"/><rect x="0" y="22" width="20" height="7" fill="#1f5788"/><rect x="0" y="0" width="20" height="44" stroke="#ffffff" stroke-width="0.2" fill="none"/><path d="M0 15H20M0 29H20M10 0V15M10 29V44" stroke="#ffffff" stroke-width="0.2" fill="none"/><text x="10" y="18.5" dy="0.35em" font-size="1.3" fill="#ffffff" fill-opacity="0.55" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 10 18.5)">Kitchen</text><text x="10" y="25.5" dy="0.35em" font-size="1.3" fill="#ffffff" fill-opacity="0.55" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 10 25.5)">Kitchen</text><rect x="-1" y="21.82" width="22" height="0.36" fill="#f4f4f0" stroke="#1a1a1a" stroke-width="0.07"/>
+<circle cx="10" cy="41" r="1.3" fill="#e69f00" stroke="#ffffff" stroke-width="0.14"/><text x="10" y="41" dy="0.35em" font-size="1.5" font-weight="700" fill="#1a1a1a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 10 41)">A</text>
+<circle cx="10" cy="14" r="1.3" fill="#0072b2" stroke="#ffffff" stroke-width="0.14"/><text x="10" y="14" dy="0.35em" font-size="1.5" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 10 14)">B</text>
+<path d="M10 41Q15.94 27.5 10.52 15.19" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-linecap="round"/><polygon points="10,14 11.03,14.97 10.02,15.41" fill="#e6f23a"/><circle cx="12.97" cy="27.5" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="12.97" y="27.5" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 12.97 27.5)">1</text>
+<path d="M10 14L10 39.7" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-linecap="round"/><polygon points="10,41 9.45,39.7 10.55,39.7" fill="#e6f23a"/><circle cx="10" cy="27.5" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="10" y="27.5" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 10 27.5)">2</text>
+<path d="M10 41Q4.06 27.5 9.48 15.19" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-dasharray="0.8 0.6"/><polygon points="10,14 9.98,15.41 8.97,14.97" fill="#e6f23a"/><circle cx="7.03" cy="27.5" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="7.03" y="27.5" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" transform="rotate(90 7.03 27.5)">3</text>
+</g>
+<rect x="-1.7" y="3.75" width="1.7" height="0.6" fill="#e6f23a" stroke="#1a1a1a" stroke-width="0.06"/><text x="0.5" y="4.05" font-size="1" fill="#1a1a1a" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif" dy="0.35em">第 1 顆為餵高球，第 2 顆為 Overhead 扣殺</text>
+</svg>
