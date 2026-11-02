@@ -69,6 +69,12 @@ def render_diagram(a_zone, b_zone, ball, move, uid):
     return f'<svg viewBox="0 0 96 72" class="court-icon" aria-hidden="true">{defs}{COURT_FRAME}{KITCHEN_LINES}{move_svg}{ball_svg}{dots}</svg>'
 
 
+def read_diagram_file(rel_path):
+    """Inline a drillplot-exported SVG (see assets/diagrams/README.md)."""
+    svg = (ROOT / "assets" / rel_path).read_text(encoding="utf-8")
+    return svg.replace("<svg ", '<svg class="court-icon" ', 1)
+
+
 def minutes_of(label):
     if not label:
         return None
@@ -79,8 +85,11 @@ def minutes_of(label):
 def build_index(data, css, env, output_dir, sessions):
     for cat in data["categories"]:
         for drill in cat["drills"]:
-            d = drill["diagram"]
-            drill["diagram_svg"] = render_diagram(d["a"], d["b"], d["ball"], d["move"], drill["id"])
+            if drill.get("diagram_file"):
+                drill["diagram_svg"] = read_diagram_file(drill["diagram_file"])
+            else:
+                d = drill["diagram"]
+                drill["diagram_svg"] = render_diagram(d["a"], d["b"], d["ball"], d["move"], drill["id"])
 
     template = env.get_template("page.html.jinja")
     html = template.render(
