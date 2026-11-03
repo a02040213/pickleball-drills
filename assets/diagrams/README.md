@@ -17,3 +17,5 @@
 6. `python3 build.py --output-dir /tmp/check` 本機確認圖有正常顯示
 
 匯出的 SVG 本身帶著原始資料（存在 `<metadata>` 裡），之後要修改，直接把這個檔案的內容貼回編輯器的「Open from source」就能繼續編輯。
+
+步驟 3-4 的複製貼上也可以用 `tools/drillplot-bridge/` 跳過，讓編輯器直接讀寫這裡的檔案，見該資料夾的 README。
