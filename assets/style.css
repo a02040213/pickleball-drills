@@ -122,10 +122,12 @@ html{scroll-behavior:smooth;}
 .session-list{list-style:none;margin:0;padding:0;}
 .session-block{display:flex;gap:14px;align-items:flex-start;}
 .session-block .time{flex-shrink:0;width:70px;font-size:12.5px;color:var(--teal);font-weight:700;padding-top:2px;}
+.drill-text .time{display:block;width:auto;padding-top:0;margin-bottom:4px;}
 .session-block .name{font-weight:700;font-size:15px;}
+.session-block .name .en{font-weight:400;font-size:12px;color:var(--sub);margin-left:4px;}
 .session-block .note{color:var(--sub);font-size:13.5px;margin:4px 0 6px;}
-.session-block .detail-link{font-size:12.5px;font-weight:600;color:var(--accent-ink);text-decoration:none;}
-.session-block .detail-link:hover{text-decoration:underline;}
+.session-block .note.method-list{list-style:none;padding:0;}
+.session-block .note.method-list li{margin-bottom:2px;}
 
 li.session-block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:12px;}
 .session-block.warmup{background:var(--amber-bg);border-radius:14px;padding:12px 18px;margin-bottom:12px;}

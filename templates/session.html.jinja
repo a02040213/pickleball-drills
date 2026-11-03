@@ -5,7 +5,7 @@
 <title>匹克球課表（{{ session.label }}）</title>
 <style>{{ css | safe }}</style>
 </head><body>
-<div class="wrap wrap-narrow">
+<div class="wrap">
 
 <p class="back-link"><a href="../index.html">← 回課表大總表</a></p>
 
@@ -24,11 +24,13 @@
 <ol class="session-list">
   {% for block in session.blocks %}
   <li class="session-block">
-    {% if block.duration %}<span class="time">{{ block.duration }}</span>{% endif %}
-    <div class="session-block-body">
-      <span class="name">{{ block.title }}</span>
-      <p class="note">{{ block.note }}</p>
-      {% if block.drill_id %}<a class="detail-link" href="../index.html#drill-{{ block.drill_id }}">看完整動作說明 →</a>{% endif %}
+    <div class="drill-diagram">{{ block.drill.diagram_svg | safe }}</div>
+    <div class="drill-text">
+      {% if block.duration %}<span class="time">{{ block.duration }}</span>{% endif %}
+      <span class="name">{{ block.drill.title_zh }} <span class="en">{{ block.drill.title_en }}</span></span>
+      <ul class="note method-list">
+        {% for line in block.drill.method %}<li>{{ line }}</li>{% endfor %}
+      </ul>
     </div>
   </li>
   {% endfor %}

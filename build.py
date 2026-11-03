@@ -104,7 +104,7 @@ def build_index(data, css, env, output_dir, sessions):
     print(f"built {output_dir / 'index.html'}")
 
 
-def build_sessions(sessions, css, env, output_dir):
+def build_sessions(sessions, drills_by_id, css, env, output_dir):
     schedule_dir = output_dir / "schedule"
     schedule_dir.mkdir(parents=True, exist_ok=True)
     template = env.get_template("session.html.jinja")
@@ -113,6 +113,8 @@ def build_sessions(sessions, css, env, output_dir):
         minutes = [minutes_of(session["warmup"].get("duration"))]
         minutes += [minutes_of(b.get("duration")) for b in session["blocks"]]
         session["total"] = f"{sum(minutes)} 分鐘" if all(m is not None for m in minutes) else None
+        for block in session["blocks"]:
+            block["drill"] = drills_by_id[block["drill_id"]]
 
         html = template.render(session=session, css=css)
         out_path = schedule_dir / f"{session['date']}.html"
@@ -135,8 +137,10 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    drills_by_id = {drill["id"]: drill for cat in data["categories"] for drill in cat["drills"]}
+
     build_index(data, css, env, output_dir, sessions)
-    build_sessions(sessions, css, env, output_dir)
+    build_sessions(sessions, drills_by_id, css, env, output_dir)
 
 
 if __name__ == "__main__":
