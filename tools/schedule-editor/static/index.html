@@ -1,4 +1,55 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><title>課表編輯器</title></head>
-<body><p>schedule-editor UI 尚未實作（見 Task 6-8）。API 已可用於 /api/*。</p></body>
-</html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>課表編輯器</title>
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header>
+  <h1>課表編輯器</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" type="button" data-tab="sessions">單日課表</button>
+    <button class="tab-btn" type="button" data-tab="drills">課表大全</button>
+  </nav>
+</header>
+
+<main>
+  <section id="tab-sessions" class="tab-panel">
+    <div class="pane list-pane">
+      <h2>現有課表</h2>
+      <ul id="session-list"></ul>
+      <button id="new-session-btn" type="button">+ 新增一天</button>
+    </div>
+
+    <form id="session-form" class="pane form-pane" hidden>
+      <h2 id="session-form-title">新增一天</h2>
+      <label>日期 <input type="date" id="f-date" required></label>
+      <label>標籤 <input type="text" id="f-label" required placeholder="例：11/20"></label>
+      <label>熱身時長 <input type="text" id="f-warmup-duration" placeholder="例：10 分鐘"></label>
+      <label>熱身備註 <input type="text" id="f-warmup-note"></label>
+      <label>輪替說明 <textarea id="f-rotation-note"></textarea></label>
+
+      <h3>訓練項目</h3>
+      <ol id="f-blocks"></ol>
+      <button type="button" id="add-block-btn">+ 新增項目</button>
+
+      <div class="form-actions">
+        <button type="submit">存檔</button>
+        <button type="button" id="delete-session-btn" hidden>刪除整天</button>
+        <button type="button" id="cancel-session-btn">取消</button>
+      </div>
+      <p id="session-form-status" role="status"></p>
+    </form>
+  </section>
+
+  <section id="tab-drills" class="tab-panel" hidden>
+    <!-- 填入內容見 Task 7 -->
+  </section>
+</main>
+
+<footer id="action-bar">
+  <!-- 填入內容見 Task 8 -->
+</footer>
+
+<script src="app.js"></script>
+</body></html>
