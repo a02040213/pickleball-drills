@@ -144,7 +144,7 @@ def build_sessions(sessions_data, drills_by_id, css, env, output_dir):
         minutes = [minutes_of(session["warmup"].get("duration"))]
         minutes += [minutes_of(b.get("duration")) for b in session["blocks"]]
         session["total"] = f"{sum(minutes)} 分鐘" if all(m is not None for m in minutes) else None
-        session["export_text"] = render_export_text(session, drills_by_id, sessions_data.get("export_defaults", {}))
+        session["export_text"] = render_export_text(session, drills_by_id, sessions_data.get("export_defaults") or {})
         for block in session["blocks"]:
             block["drill"] = drills_by_id[block["drill_id"]]
 

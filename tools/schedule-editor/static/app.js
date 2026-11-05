@@ -26,6 +26,7 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
 
 let drillsCache = [];
 let editingOriginalDate = null; // null = creating new or duplicating
+let loadedSession = null; // full session object last fetched, null for a brand-new session
 
 async function loadDrillsCache() {
   const { data } = await api("GET", "/api/drills");
@@ -130,6 +131,7 @@ async function openSessionForm(date, { duplicate }) {
     document.getElementById("f-rotation-note").value = session.rotation_note || "";
     for (const b of session.blocks) addBlockRow(b);
     editingOriginalDate = duplicate ? null : date;
+    loadedSession = session;
     document.getElementById("session-form-title").textContent = duplicate ? "複製成新的一天" : `編輯 ${session.label}`;
     document.getElementById("delete-session-btn").hidden = duplicate;
   } else {
@@ -139,6 +141,7 @@ async function openSessionForm(date, { duplicate }) {
     document.getElementById("f-warmup-note").value = "";
     document.getElementById("f-rotation-note").value = "";
     editingOriginalDate = null;
+    loadedSession = null;
     document.getElementById("session-form-title").textContent = "新增一天";
     document.getElementById("delete-session-btn").hidden = true;
   }
@@ -159,16 +162,14 @@ document.getElementById("delete-session-btn").addEventListener("click", async ()
 });
 
 async function submitSession(force) {
-  const session = {
+  const session = buildSessionPayload(loadedSession, {
     date: document.getElementById("f-date").value,
     label: document.getElementById("f-label").value,
-    warmup: {
-      duration: document.getElementById("f-warmup-duration").value,
-      note: document.getElementById("f-warmup-note").value,
-    },
-    rotation_note: document.getElementById("f-rotation-note").value,
+    warmupDuration: document.getElementById("f-warmup-duration").value,
+    warmupNote: document.getElementById("f-warmup-note").value,
+    rotationNote: document.getElementById("f-rotation-note").value,
     blocks: readBlocksFromForm(),
-  };
+  });
   const { status, data } = await api("POST", "/api/sessions", {
     session, original_date: editingOriginalDate, force,
   });

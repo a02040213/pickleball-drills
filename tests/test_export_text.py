@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import build as build_module
 from build import render_export_text
 
 DRILLS_BY_ID = {
@@ -74,3 +75,14 @@ def test_empty_header_and_footer_defaults_omit_those_sections():
     text = render_export_text(session, {}, {"header": "", "footer": ""})
     assert not text.startswith("\n")
     assert text.startswith("🔥 熱身")
+
+
+def test_build_sessions_tolerates_null_export_defaults(tmp_path):
+    from jinja2 import Environment, FileSystemLoader
+
+    session = make_session(blocks=[], total=None)
+    session["date"] = "2099-01-01"
+    sessions_data = {"export_defaults": None, "sessions": [session]}
+    env = Environment(loader=FileSystemLoader(str(build_module.ROOT / "templates")))
+    build_module.build_sessions(sessions_data, DRILLS_BY_ID, "", env, tmp_path)
+    assert (tmp_path / "schedule" / "2099-01-01.html").exists()

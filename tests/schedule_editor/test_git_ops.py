@@ -56,6 +56,22 @@ def test_git_commit_only_stages_content_and_diagrams(tmp_path):
     assert "README.md" not in changed
 
 
+def test_git_commit_excludes_files_staged_before_it_was_called(tmp_path):
+    repo = make_repo(tmp_path)
+    (repo / "content" / "sessions.yaml").write_text("sessions: [{}]\n")
+    (repo / "README.md").write_text("pre-staged unrelated change\n")
+    run(["git", "add", "README.md"], repo)  # staged BEFORE git_commit runs, unlike content/
+    commit_hash = git_commit(repo, "更新課表")
+    changed = subprocess.run(
+        ["git", "show", "--stat", "--format=", commit_hash], cwd=repo,
+        capture_output=True, text=True, check=True,
+    ).stdout
+    assert "content/sessions.yaml" in changed
+    assert "README.md" not in changed
+    status = subprocess.run(["git", "status", "--porcelain"], cwd=repo, capture_output=True, text=True, check=True).stdout
+    assert "README.md" in status  # still staged for a future commit, not lost
+
+
 def test_git_diff_scoped_to_content_and_diagrams(tmp_path):
     repo = make_repo(tmp_path)
     (repo / "content" / "sessions.yaml").write_text("sessions: [{}]\n")

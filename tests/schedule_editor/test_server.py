@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "schedule-editor"))
 from server import AppState, ScheduleEditorServer, Handler
+from lib import diagram_files
 
 
 def run(cmd, cwd):
@@ -116,6 +117,14 @@ def test_add_drill_after_diagram_drawn_succeeds(running_server):
         "method": ["x"], "points": ["x"],
     })
     assert status == 200 and body["id"] == 2
+    status, drills_body = call("GET", f"{base}/api/drills")
+    # pin the :02d-padded diagram_file (Task 3 ruling) at the point it's stored,
+    # not just at diagram_exists() — a regression here must fail a test.
+    assert diagram_files.diagram_exists(repo / "assets" / "diagrams", 2)
+    import yaml as _yaml
+    doc = _yaml.safe_load((repo / "content" / "drills.yaml").read_text(encoding="utf-8"))
+    new_drill = next(d for c in doc["categories"] for d in c["drills"] if d["id"] == 2)
+    assert new_drill["diagram_file"] == "diagrams/drill-02.svg"
 
 
 def test_add_drill_ignores_client_supplied_id(running_server):
@@ -164,6 +173,33 @@ def test_console_bridge_script_has_base_filled_in(running_server):
         text = r.read().decode()
     assert "__BASE__" not in text
     assert "/api/diagram/list" in text
+
+
+def test_console_bridge_script_pre_targets_the_pending_new_drill(running_server):
+    # next_drill_id is 2 in the fixture — the script must be ready to Save
+    # to drill-02.svg immediately, without the user ever clicking 載入
+    # (there is nothing to load for a brand-new drill).
+    base, _ = running_server
+    req = urllib.request.Request(f"{base}/api/console-bridge-script")
+    with urllib.request.urlopen(req) as r:
+        text = r.read().decode()
+    assert "__TARGET__" not in text
+    assert "let currentFile = 'drill-02.svg';" in text
+
+
+def test_cors_headers_present_on_diagram_list(running_server):
+    base, _ = running_server
+    req = urllib.request.Request(f"{base}/api/diagram/list")
+    with urllib.request.urlopen(req) as r:
+        assert r.headers.get("Access-Control-Allow-Origin") == "*"
+
+
+def test_options_preflight_on_diagram_file(running_server):
+    base, _ = running_server
+    req = urllib.request.Request(f"{base}/api/diagram/file", method="OPTIONS")
+    with urllib.request.urlopen(req) as r:
+        assert r.status == 204
+        assert r.headers.get("Access-Control-Allow-Origin") == "*"
 
 
 def test_commit_rejected_before_build(running_server):

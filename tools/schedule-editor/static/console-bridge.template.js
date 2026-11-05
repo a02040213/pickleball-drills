@@ -10,7 +10,10 @@
   const editor = document.querySelector('drillplot-editor');
   if (!editor) { console.error('drillplot: 找不到 <drillplot-editor> 元素'); return; }
 
-  let currentFile = null;
+  // Pre-targeted at the drill this schedule-editor session is adding —
+  // there's nothing to 載入 for a brand-new drill, so Save must already
+  // have a destination filename without the user picking one.
+  let currentFile = '__TARGET__';
 
   const panel = document.createElement('div');
   panel.style.cssText = 'position:fixed;top:8px;right:8px;z-index:99999;background:#fff;border:1px solid #888;padding:8px;font:12px sans-serif;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.3)';
