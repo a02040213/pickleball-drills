@@ -25,6 +25,7 @@ categories:
     - 控制丁克的高度、深度與落點。
     - 建立固定方向的控球能力。
     - 練習在有限擊球選擇下維持穩定性。
+    summary: 雙方站在廚房線以斜線丁克開始，限制只能打斜線，或一人只能打直線、一人只能打斜線，練習固定方向的控球。
   - id: 2
     title_zh: 正反拍交叉丁克
     title_en: Forehand / Backhand Cross Dink
@@ -42,6 +43,7 @@ categories:
     - 分別建立正拍與反拍丁克的穩定性。
     - 練習不同擊球面的觸球感與落點控制。
     - 提升反拍丁克的穩定度。
+    summary: 兩人皆站在廚房線上開始，打斜線丁克；一組先打正拍，一組先打反拍，打完兩組交換。
   - id: 3
     title_zh: 伸縮丁克
     title_en: Slinky
@@ -60,6 +62,7 @@ categories:
     - 練習不同場地位置的丁克控制。
     - 建立前後移動時的擊球穩定性。
     - 練習移動後快速恢復平衡與擊球準備。
+    summary: A 固定站在廚房線，B 每三顆丁克就退一步，退到底線後再每三顆向前，回到廚房線後交換角色。
 - code: '02'
   title_zh: 攻防轉換與過渡
   title_en: Transition & Reset
@@ -81,6 +84,7 @@ categories:
     points:
     - A：練習長丁克的深度與落點控制。
     - B：練習網前截擊的穩定性與方向控制。
+    summary: 一人站在底線打長丁，一人站在廚房線打不落地回球。
   - id: 5
     title_zh: 抽球對截擊
     title_en: Drive vs. Volley
@@ -97,6 +101,7 @@ categories:
     points:
     - A：練習 Drive 的速度、深度與攻擊角度。
     - B：練習面對底線強力抽球時的截擊與控球能力。
+    summary: 一人站在底線打 Drive，一人站在廚房線以不落地截擊回球。
   - id: 6
     title_zh: Reset 對截擊
     title_en: Reset vs. Volley
@@ -114,6 +119,7 @@ categories:
     points:
     - A：練習在受壓情況下柔化來球，將球穩定送入廚房區。
     - B：練習控制截擊力道與落點，持續維持適當壓力。
+    summary: 一人站在過渡區打 Reset，一人站在廚房線稍微做加壓。
   - id: 7
     title_zh: 後場多球對截擊
     title_en: Deep Ball & Drop vs. Volley
@@ -131,6 +137,7 @@ categories:
     points:
     - A：練習不同球路的選擇與後場控球。
     - B：練習面對不同球速、弧線與落點時的網前處理能力。
+    summary: 一人站在底線視狀況打長丁或 drop，一人站在廚房線回球。
   - id: 8
     title_zh: 逐步上網
     title_en: Work-Up
@@ -149,6 +156,7 @@ categories:
     - 練習從底線推進至廚房線的完整過渡過程。
     - 判斷何時適合 Drop、何時需要 Reset。
     - 練習移動中保持低重心與擊球平衡。
+    summary: 一人站在底線，另一人在廚房線用 Drive、Drop、Speed Up 施加壓力，底線的人靠 Drop 或 Reset 逐步推進到廚房線，抵達後開始正式對打。
 - code: '03'
   title_zh: 截擊與快手
   title_en: Volley & Fast Hands
@@ -171,6 +179,7 @@ categories:
     - 提升反應速度與手眼協調。
     - 練習快速切換正反拍。
     - 建立近距離攻防的穩定性。
+    summary: 雙方站在廚房線以快速截擊對打，可設定瞄準對方髖部，練習近距離反應。
   - id: 10
     title_zh: 截擊手感控制
     title_en: Volley Hands Control
@@ -189,6 +198,7 @@ categories:
     - 建立截擊的觸球手感。
     - 練習控制拍面角度與擊球力道。
     - 減少過度揮拍，建立緊湊的截擊動作。
+    summary: 兩人在網前以 60–75% 力量截擊，只求球不落地、不求致勝。手拍保持緊湊，放在肩膀前方。
   - id: 11
     title_zh: 死丁克快手
     title_en: Dead Dink Hands
@@ -208,6 +218,7 @@ categories:
     - 練習辨識可攻擊的丁克。
     - 建立由防守轉為進攻的反應。
     - 練習 Speed Up 後的快手銜接。
+    summary: 雙方先中性丁克對打，其中一人故意打出一顆偏高的死丁克，讓另一人抓機會 Speed Up，接著雙方進入快手對抗。
   - id: 12
     title_zh: 丁克、加速與擋球
     title_en: Dink, Speed Up & Block
@@ -226,6 +237,7 @@ categories:
     - 練習從丁克轉換為 Speed Up 的時機。
     - 建立 Speed Up 的方向與速度控制。
     - 練習面對加速球時的拍面穩定與 Block 技巧。
+    summary: 雙方從丁克開始，一人找機會 Speed Up，另一人練習用 Block 擋回，輪流練習進攻與防守。
 - code: '04'
   title_zh: 進攻與防守情境
   title_en: Attack & Defense Scenarios
@@ -248,6 +260,7 @@ categories:
     points:
     - A：練習面對 Overhead 時的預判、站位與防守能力。
     - B：練習 Overhead 攻擊後的連續進攻與落點控制。
+    summary: 一人站在底線，一人站在廚房線；底線的人先開一個高球，廚房線的人打 Overhead 進攻，接著底線的人練防守、廚房線的人持續進攻。
   - id: 14
     title_zh: 挑球追球
     title_en: Lob Retrieval
@@ -266,6 +279,7 @@ categories:
     - 練習辨識 Lob 的時機與落點。
     - 建立轉身、回追及重新定位的腳步能力。
     - 練習在被迫離開網前後重新組織防守。
+    summary: 雙方正常丁克對打，輪流突然挑高球（Lob），被挑的人先讓球落地，再快速回追把球打回去。
   - id: 15
     title_zh: 主動進攻方
     title_en: Initiator
@@ -283,6 +297,7 @@ categories:
     points:
     - Initiator：練習進攻意識、出手時機與主動創造機會。
     - Defender：練習預判、化解攻勢及防守反擊。
+    summary: 一人當 Initiator，隨時可以主動進攻（包括失去平衡或空中截擊時），另一人當 Defender 專心防守反擊，打完一分交換角色。
   - id: 16
     title_zh: 勝利球判斷
     title_en: Winner
@@ -303,6 +318,7 @@ categories:
     - 練習辨識真正的進攻機會。
     - 培養對球路、對手位置及空檔的判斷能力。
     - 避免在不適合的時機勉強進攻。
+    summary: 雙方合作對打，覺得要打出致勝球前得先喊「Winner」：喊了有得分加 1 分、喊了沒得分扣 1 分、沒喊就得分不計分，先到 7 分獲勝。
 - code: '05'
   title_zh: 腳步與移動能力
   title_en: Footwork & Movement
@@ -326,6 +342,7 @@ categories:
     - 練習進場、擊球與回位的移動節奏。
     - 建立移動中的擊球平衡。
     - 提升 Drive 的穩定性與落點控制。
+    summary: 雙方站在底線外側靠邊線，每次擊球前先快速移動進場，用約 60% 力量 Drive 打對方後場中央的指定區域，持續來回練習移動節奏。
   - id: 18
     title_zh: 前五拍練習
     title_en: First Five Shots
@@ -342,6 +359,7 @@ categories:
     - 建立發接發後的攻防銜接。
     - 練習第三拍 Drop 的穩定性。
     - 熟悉加速與 Reset 之間的攻防轉換。
+    summary: 發、接發、drop、加速、reset，依序完成前五拍。
 - code: '06'
   title_zh: 綜合對抗與比賽訓練
   title_en: Game & Competitive Drills
@@ -362,6 +380,7 @@ categories:
     - 熟悉比賽節奏與得分壓力。
     - 練習不同比分下的策略選擇。
     note: 原始資料未附具體玩法規則，先保留名稱，避免誤植規則。
+    summary: 依照 7-11 計分賽制進行，練習在特定分數規則與壓力下的攻防應對。
   - id: 20
     title_zh: Dingles
     title_en: Dingles
@@ -379,6 +398,7 @@ categories:
     - 練習單打斜線對抗。
     - 建立連續擊球與攻防轉換能力。
     - 提升在有限場地中的控球與決策能力。
+    summary: 用半場進行雙人對抗，雙方各自斜線對打，把單打場地切成兩個獨立的斜線對抗區，持續練習攻防轉換。
   - id: 21
     title_zh: 丁克丁克 Bang
     title_en: Dink Dink Bang
@@ -396,6 +416,7 @@ categories:
     - 建立固定節奏下的攻防轉換能力。
     - 練習 Speed Up 後的 Reset 銜接。
     - 培養對固定戰術節奏的熟悉度。
+    summary: 雙方站在廚房線，照固定節奏打：三顆 Dink → 第四顆 Speed Up → 第五顆 Reset → 再回到三顆 Dink，循環下去，就算中途失誤也照節奏繼續。
   - id: 22
     title_zh: 綜合攻防對抗
     title_en: Dink to Speed Up to Hands
@@ -415,6 +436,7 @@ categories:
     - 練習實戰中的攻擊時機判斷。
     - 建立從中性球轉為攻防對抗的能力。
     note: 此項是依照原本的「Dink、Speed up、Block」內容重新整理出的綜合版本，與第 12 項的技術分解練習用途不同。
+    summary: 雙方從丁克開始，依實際來球自由選擇 Speed Up，對方練習 Block 或反擊，進入快手對抗直到該分結束——把丁克、Speed Up、Block、快手串在一起練。
 schedule:
   title: 建議的實際課表編排
   intro: 如果這份資料是要拿來安排雙人訓練，建議不要單純照技術分類練習，而是依照球員在比賽中的實際發展順序安排。
