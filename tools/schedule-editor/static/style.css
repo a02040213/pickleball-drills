@@ -11,7 +11,9 @@ main { display: flex; gap: 16px; padding: 16px; align-items: flex-start; flex-wr
 .form-pane { flex: 1; min-width: 320px; }
 .form-pane label { display: block; margin: 8px 0 4px; font-size: 13px; }
 .form-pane input, .form-pane textarea, .form-pane select { width: 100%; box-sizing: border-box; padding: 4px; }
-#f-blocks { list-style: none; padding: 0; }
+#f-blocks, #d-method, #d-points { list-style: none; padding: 0; }
+#d-method li, #d-points li { display: flex; gap: 6px; margin-bottom: 4px; }
+#d-method li input, #d-points li input { flex: 1; }
 #f-blocks li { border: 1px solid #dfe8de; border-radius: 4px; padding: 8px; margin-bottom: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 #f-blocks li select { flex: 2; }
 #f-blocks li input { flex: 1; }

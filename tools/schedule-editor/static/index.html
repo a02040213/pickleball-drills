@@ -43,7 +43,42 @@
   </section>
 
   <section id="tab-drills" class="tab-panel" hidden>
-    <!-- 填入內容見 Task 7 -->
+    <div class="pane form-pane">
+      <h2>新增訓練項目</h2>
+
+      <label>分類
+        <select id="d-category"></select>
+      </label>
+      <div id="d-new-category" hidden>
+        <label>新分類代碼 <input type="text" id="d-cat-code" placeholder="例：09"></label>
+        <label>中文名稱 <input type="text" id="d-cat-title-zh"></label>
+        <label>英文名稱 <input type="text" id="d-cat-title-en"></label>
+        <label>訓練重點 <input type="text" id="d-cat-focus"></label>
+        <button type="button" id="d-cat-create-btn">建立分類</button>
+      </div>
+
+      <p>將配發 id：<b id="d-next-id">-</b></p>
+      <label>中文標題 <input type="text" id="d-title-zh"></label>
+      <label>英文標題 <input type="text" id="d-title-en"></label>
+
+      <h3>步驟（method）</h3>
+      <ol id="d-method"></ol>
+      <button type="button" id="d-add-method-btn">+ 新增步驟</button>
+
+      <h3>重點（points）</h3>
+      <ol id="d-points"></ol>
+      <button type="button" id="d-add-point-btn">+ 新增重點</button>
+
+      <h3>示意圖</h3>
+      <button type="button" id="d-open-drillplot-btn">開啟 drillplot + 複製連動腳本</button>
+      <button type="button" id="d-check-diagram-btn">重新檢查</button>
+      <span id="d-diagram-status">尚未檢查</span>
+
+      <div class="form-actions">
+        <button type="button" id="d-save-btn" disabled>存檔</button>
+      </div>
+      <p id="d-status" role="status"></p>
+    </div>
   </section>
 </main>
 

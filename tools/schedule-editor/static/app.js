@@ -18,6 +18,7 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
     document.querySelectorAll(".tab-panel").forEach((p) => { p.hidden = true; });
     btn.classList.add("active");
     document.getElementById(`tab-${btn.dataset.tab}`).hidden = false;
+    if (btn.dataset.tab === "drills") refreshDrillsTab();
   });
 });
 
@@ -196,3 +197,123 @@ document.getElementById("session-form").addEventListener("submit", (e) => {
 });
 
 refreshSessionList();
+
+// --- drills tab ---
+
+const DRILLPLOT_URL = "https://maikuru.github.io/drillplot/";
+let currentNextId = null;
+let diagramConfirmed = false;
+
+function addDynamicListItem(containerId) {
+  const li = document.createElement("li");
+  const input = document.createElement("input");
+  input.type = "text";
+  const del = document.createElement("button");
+  del.type = "button";
+  del.textContent = "刪除";
+  del.addEventListener("click", () => li.remove());
+  li.appendChild(input);
+  li.appendChild(del);
+  document.getElementById(containerId).appendChild(li);
+}
+
+document.getElementById("d-add-method-btn").addEventListener("click", () => addDynamicListItem("d-method"));
+document.getElementById("d-add-point-btn").addEventListener("click", () => addDynamicListItem("d-points"));
+
+function readDynamicList(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} input`)).map((i) => i.value).filter((v) => v);
+}
+
+async function refreshCategories(selectCode) {
+  const { data } = await api("GET", "/api/categories");
+  const select = document.getElementById("d-category");
+  select.innerHTML = "";
+  for (const c of data.categories) {
+    const opt = document.createElement("option");
+    opt.value = c.code;
+    opt.textContent = `${c.code} ${c.title_zh}`;
+    select.appendChild(opt);
+  }
+  const newOpt = document.createElement("option");
+  newOpt.value = "__new__";
+  newOpt.textContent = "+ 新增分類";
+  select.appendChild(newOpt);
+  if (selectCode) select.value = selectCode;
+}
+
+document.getElementById("d-category").addEventListener("change", (e) => {
+  document.getElementById("d-new-category").hidden = e.target.value !== "__new__";
+});
+
+document.getElementById("d-cat-create-btn").addEventListener("click", async () => {
+  const code = document.getElementById("d-cat-code").value;
+  const { status, data } = await api("POST", "/api/categories", {
+    code,
+    title_zh: document.getElementById("d-cat-title-zh").value,
+    title_en: document.getElementById("d-cat-title-en").value,
+    focus: document.getElementById("d-cat-focus").value,
+  });
+  if (status !== 200) {
+    document.getElementById("d-status").textContent = `新增分類失敗：${JSON.stringify(data)}`;
+    return;
+  }
+  await refreshCategories(code);
+  document.getElementById("d-new-category").hidden = true;
+});
+
+async function refreshNextId() {
+  const { data } = await api("GET", "/api/drills/next-id");
+  currentNextId = data.next_id;
+  document.getElementById("d-next-id").textContent = `#${currentNextId}`;
+  diagramConfirmed = false;
+  document.getElementById("d-diagram-status").textContent = "尚未檢查";
+  document.getElementById("d-save-btn").disabled = true;
+}
+
+async function refreshDrillsTab() {
+  await refreshCategories();
+  await refreshNextId();
+  document.getElementById("d-title-zh").value = "";
+  document.getElementById("d-title-en").value = "";
+  document.getElementById("d-method").innerHTML = "";
+  document.getElementById("d-points").innerHTML = "";
+  document.getElementById("d-status").textContent = "";
+}
+
+document.getElementById("d-open-drillplot-btn").addEventListener("click", async () => {
+  const res = await fetch("/api/console-bridge-script");
+  const script = await res.text();
+  await navigator.clipboard.writeText(script);
+  window.open(DRILLPLOT_URL, "_blank");
+  document.getElementById("d-status").textContent = "連動腳本已複製，貼到 drillplot 頁面的 DevTools Console";
+});
+
+document.getElementById("d-check-diagram-btn").addEventListener("click", async () => {
+  const { data } = await api("GET", `/api/diagram/exists?drill_id=${currentNextId}`);
+  diagramConfirmed = data.exists;
+  document.getElementById("d-diagram-status").textContent = data.exists
+    ? `✅ 已找到 drill-${String(currentNextId).padStart(2, "0")}.svg`
+    : "❌ 還沒畫好";
+  document.getElementById("d-save-btn").disabled = !data.exists;
+});
+
+document.getElementById("d-save-btn").addEventListener("click", async () => {
+  if (!diagramConfirmed) return;
+  const categoryCode = document.getElementById("d-category").value;
+  const { status, data } = await api("POST", "/api/drills", {
+    category_code: categoryCode,
+    title_zh: document.getElementById("d-title-zh").value,
+    title_en: document.getElementById("d-title-en").value,
+    method: readDynamicList("d-method"),
+    points: readDynamicList("d-points"),
+  });
+  const statusEl = document.getElementById("d-status");
+  if (status !== 200) {
+    statusEl.textContent = `存檔失敗：${JSON.stringify(data)}`;
+    statusEl.className = "status-err";
+    return;
+  }
+  statusEl.textContent = `已存檔（#${data.id}）`;
+  statusEl.className = "status-ok";
+  refreshDrillsTab();
+});
