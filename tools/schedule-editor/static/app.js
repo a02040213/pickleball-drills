@@ -155,6 +155,7 @@ document.getElementById("delete-session-btn").addEventListener("click", async ()
   await api("DELETE", `/api/sessions/${editingOriginalDate}`);
   document.getElementById("session-form").hidden = true;
   refreshSessionList();
+  hideCommitArea();
 });
 
 async function submitSession(force) {
@@ -189,6 +190,7 @@ async function submitSession(force) {
   statusEl.className = "status-ok";
   document.getElementById("session-form").hidden = true;
   refreshSessionList();
+  hideCommitArea();
 }
 
 document.getElementById("session-form").addEventListener("submit", (e) => {
@@ -316,4 +318,58 @@ document.getElementById("d-save-btn").addEventListener("click", async () => {
   statusEl.textContent = `已存檔（#${data.id}）`;
   statusEl.className = "status-ok";
   refreshDrillsTab();
+  hideCommitArea();
+});
+
+// --- action bar (test build / diff / commit & push) ---
+
+function hideCommitArea() {
+  document.getElementById("ab-commit-area").hidden = true;
+}
+
+document.getElementById("ab-build-btn").addEventListener("click", async () => {
+  const { data } = await api("POST", "/api/build");
+  const out = document.getElementById("ab-build-output");
+  out.hidden = false;
+  out.textContent = data.output;
+  const status = document.getElementById("ab-status");
+  if (data.ok) {
+    status.textContent = "✅ build 成功";
+    status.className = "status-ok";
+    const { data: msg } = await api("GET", "/api/commit/suggested-message");
+    document.getElementById("ab-commit-message").value = msg.message;
+    document.getElementById("ab-commit-area").hidden = false;
+  } else {
+    status.textContent = "❌ build 失敗";
+    status.className = "status-err";
+    hideCommitArea();
+  }
+});
+
+document.getElementById("ab-diff-btn").addEventListener("click", async () => {
+  const { data } = await api("GET", "/api/diff");
+  const out = document.getElementById("ab-diff-output");
+  out.hidden = false;
+  out.textContent = `${data.stat}\n${data.diff}`;
+});
+
+document.getElementById("ab-commit-push-btn").addEventListener("click", async () => {
+  const status = document.getElementById("ab-status");
+  const message = document.getElementById("ab-commit-message").value;
+  const commitRes = await api("POST", "/api/commit", { message });
+  if (commitRes.status !== 200) {
+    status.textContent = `Commit 失敗：${JSON.stringify(commitRes.data)}`;
+    status.className = "status-err";
+    if (commitRes.status === 409) hideCommitArea();
+    return;
+  }
+  const pushRes = await api("POST", "/api/push");
+  if (pushRes.status !== 200) {
+    status.textContent = `已 commit（${commitRes.data.commit}），但 push 失敗：${JSON.stringify(pushRes.data)}`;
+    status.className = "status-err";
+    return;
+  }
+  status.textContent = `已 commit 並 push（${commitRes.data.commit}）`;
+  status.className = "status-ok";
+  hideCommitArea();
 });

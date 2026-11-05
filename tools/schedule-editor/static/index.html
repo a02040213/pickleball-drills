@@ -83,7 +83,15 @@
 </main>
 
 <footer id="action-bar">
-  <!-- 填入內容見 Task 8 -->
+  <button type="button" id="ab-build-btn">Test build</button>
+  <button type="button" id="ab-diff-btn">Diff</button>
+  <span id="ab-status" role="status"></span>
+  <pre id="ab-build-output" hidden></pre>
+  <pre id="ab-diff-output" hidden></pre>
+  <div id="ab-commit-area" hidden>
+    <label>Commit message <input type="text" id="ab-commit-message"></label>
+    <button type="button" id="ab-commit-push-btn">Commit &amp; Push</button>
+  </div>
 </footer>
 
 <script src="app.js"></script>
