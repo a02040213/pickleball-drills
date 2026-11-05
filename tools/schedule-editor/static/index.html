@@ -48,10 +48,7 @@
   <section id="tab-drills" class="tab-panel" hidden>
     <div class="pane list-pane">
       <h2>現有訓練項目</h2>
-      <table>
-        <thead><tr><th>分類</th><th>名稱</th><th></th><th></th></tr></thead>
-        <tbody id="drill-list"></tbody>
-      </table>
+      <div id="drill-list"></div>
       <button id="new-drill-btn" type="button">+ 新增項目</button>
     </div>
 
@@ -72,6 +69,9 @@
       <p id="d-id-label">將配發 id：<b id="d-next-id">-</b></p>
       <label>中文標題 <input type="text" id="d-title-zh"></label>
       <label>英文標題 <input type="text" id="d-title-en"></label>
+      <label>簡述（選填，複製文字時優先顯示；沒填就顯示英文標題）
+        <textarea id="d-summary"></textarea>
+      </label>
 
       <h3>步驟（method）</h3>
       <ol id="d-method"></ol>
@@ -83,11 +83,10 @@
 
       <div id="d-diagram-section">
         <h3>示意圖</h3>
-        <button type="button" id="d-open-drillplot-btn">開啟 drillplot + 複製連動腳本</button>
-        <button type="button" id="d-check-diagram-btn">重新檢查</button>
-        <span id="d-diagram-status">尚未檢查</span>
+        <p id="d-diagram-hint"></p>
+        <drillplot-editor id="drill-editor" save-label="存檔示意圖"></drillplot-editor>
+        <p id="d-diagram-status" role="status"></p>
       </div>
-      <p id="d-edit-diagram-note" hidden>圖已存在，這裡不重畫——要改圖請用 <code>tools/drillplot-bridge/</code>。</p>
 
       <div class="form-actions">
         <button type="button" id="d-save-btn" disabled>存檔</button>
@@ -110,6 +109,7 @@
   </div>
 </footer>
 
+<script type="module" src="vendor/drillplot/editor.js"></script>
 <script src="session-merge.js"></script>
 <script src="date-utils.js"></script>
 <script src="app.js"></script>

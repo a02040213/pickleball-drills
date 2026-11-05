@@ -12,28 +12,6 @@ async function api(method, path, body) {
   return { status: res.status, ok: res.ok, data };
 }
 
-// navigator.clipboard requires a secure context (https, or http://localhost) —
-// this tool is normally opened over a plain http://<lan-ip> URL, where that
-// API doesn't exist at all. Fall back to a hidden-textarea + execCommand,
-// which works regardless.
-async function copyToClipboard(text) {
-  if (window.isSecureContext && navigator.clipboard) {
-    await navigator.clipboard.writeText(text);
-    return true;
-  }
-  const ta = document.createElement("textarea");
-  ta.value = text;
-  ta.style.position = "fixed";
-  ta.style.opacity = "0";
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  let ok = false;
-  try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-  document.body.removeChild(ta);
-  return ok;
-}
-
 document.querySelectorAll(".tab-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
@@ -257,10 +235,54 @@ refreshSessionList();
 
 // --- drills tab ---
 
-const DRILLPLOT_URL = "https://maikuru.github.io/drillplot/";
 let drillPendingId = null; // the id a create/duplicate flow will save to
 let diagramConfirmed = false;
 let editingDrillId = null; // non-null = editing this existing drill (PUT), null = create/duplicate (POST)
+
+// Matches drillplot's own emptySource() (format name/version are fixed by
+// that library's schema) — resets the embedded editor for a fresh drawing.
+const BLANK_DRILLPLOT_SOURCE = {
+  format: "drill-diagram", version: 1, title: "", caption: "",
+  view: "full", side: "bottom", orient: "portrait", items: [],
+};
+
+function diagramFilename(id) {
+  return `drill-${String(id).padStart(2, "0")}.svg`;
+}
+
+async function wireDiagramEditor(id, { preload }) {
+  const editor = document.getElementById("drill-editor");
+  const hint = document.getElementById("d-diagram-hint");
+  const status = document.getElementById("d-diagram-status");
+  const name = diagramFilename(id);
+
+  if (preload) {
+    const res = await fetch(`/api/diagram/file?name=${name}`);
+    const svg = await res.text();
+    editor.load(svg);
+    hint.textContent = `目前的示意圖（${name}），在編輯器裡改完按「存檔示意圖」會直接覆蓋它`;
+    status.textContent = "";
+  } else {
+    editor.load(BLANK_DRILLPLOT_SOURCE);
+    hint.textContent = `畫完按編輯器裡的「存檔示意圖」，會存成 ${name}`;
+    diagramConfirmed = false;
+    status.textContent = "尚未儲存";
+  }
+}
+
+document.getElementById("drill-editor").addEventListener("save", async (e) => {
+  const id = editingDrillId || drillPendingId;
+  const name = diagramFilename(id);
+  const { status } = await api("POST", `/api/diagram/file?name=${name}`, { svg: e.detail.svg });
+  const statusEl = document.getElementById("d-diagram-status");
+  if (status === 200) {
+    diagramConfirmed = true;
+    statusEl.textContent = `✅ 已存檔（${name}）`;
+    if (!editingDrillId) document.getElementById("d-save-btn").disabled = false;
+  } else {
+    statusEl.textContent = "❌ 存檔失敗";
+  }
+});
 
 async function refreshCategories(selectCode) {
   const { data } = await api("GET", "/api/categories");
@@ -324,39 +346,52 @@ function readDynamicList(containerId) {
 async function refreshDrillList() {
   const { data } = await api("GET", "/api/drills");
   const { data: catData } = await api("GET", "/api/categories");
-  const titleByCode = {};
-  for (const c of catData.categories) titleByCode[c.code] = c.title_zh;
 
-  const tbody = document.getElementById("drill-list");
-  tbody.innerHTML = "";
-  for (const d of data.drills) {
-    const tr = document.createElement("tr");
+  const byCategory = {};
+  for (const d of data.drills) (byCategory[d.category_code] = byCategory[d.category_code] || []).push(d);
 
-    const catTd = document.createElement("td");
-    catTd.textContent = titleByCode[d.category_code] || d.category_code;
+  const container = document.getElementById("drill-list");
+  container.innerHTML = "";
+  for (const c of catData.categories) {
+    const drills = byCategory[c.code];
+    if (!drills || !drills.length) continue;
 
-    const nameTd = document.createElement("td");
-    nameTd.textContent = `#${d.id} ${d.title_zh}`;
+    const section = document.createElement("section");
+    section.className = "drill-section";
+    const heading = document.createElement("h3");
+    heading.textContent = `${c.code} ${c.title_zh}`;
+    section.appendChild(heading);
 
-    const editTd = document.createElement("td");
-    const editBtn = document.createElement("button");
-    editBtn.type = "button";
-    editBtn.textContent = "編輯";
-    editBtn.addEventListener("click", () => openDrillForm(d.id, { duplicate: false }));
-    editTd.appendChild(editBtn);
+    const table = document.createElement("table");
+    const tbody = document.createElement("tbody");
+    for (const d of drills) {
+      const tr = document.createElement("tr");
 
-    const dupTd = document.createElement("td");
-    const dupBtn = document.createElement("button");
-    dupBtn.type = "button";
-    dupBtn.textContent = "複製";
-    dupBtn.addEventListener("click", () => openDrillForm(d.id, { duplicate: true }));
-    dupTd.appendChild(dupBtn);
+      const nameTd = document.createElement("td");
+      nameTd.textContent = `#${d.id} ${d.title_zh}`;
 
-    tr.appendChild(catTd);
-    tr.appendChild(nameTd);
-    tr.appendChild(editTd);
-    tr.appendChild(dupTd);
-    tbody.appendChild(tr);
+      const editTd = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.textContent = "編輯";
+      editBtn.addEventListener("click", () => openDrillForm(d.id, { duplicate: false }));
+      editTd.appendChild(editBtn);
+
+      const dupTd = document.createElement("td");
+      const dupBtn = document.createElement("button");
+      dupBtn.type = "button";
+      dupBtn.textContent = "複製";
+      dupBtn.addEventListener("click", () => openDrillForm(d.id, { duplicate: true }));
+      dupTd.appendChild(dupBtn);
+
+      tr.appendChild(nameTd);
+      tr.appendChild(editTd);
+      tr.appendChild(dupTd);
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    section.appendChild(table);
+    container.appendChild(section);
   }
 }
 
@@ -371,9 +406,6 @@ async function openDrillForm(sourceId, { duplicate }) {
   const editing = sourceId && !duplicate;
   editingDrillId = editing ? sourceId : null;
 
-  document.getElementById("d-diagram-section").hidden = editing;
-  document.getElementById("d-edit-diagram-note").hidden = !editing;
-
   let source = null;
   if (sourceId) {
     const { data } = await api("GET", `/api/drills/${sourceId}`);
@@ -384,6 +416,7 @@ async function openDrillForm(sourceId, { duplicate }) {
 
   document.getElementById("d-title-zh").value = source ? source.title_zh : "";
   document.getElementById("d-title-en").value = source ? source.title_en : "";
+  document.getElementById("d-summary").value = source ? (source.summary || "") : "";
   for (const m of (source ? source.method : [])) addDynamicListItem("d-method", m);
   for (const p of (source ? source.points : [])) addDynamicListItem("d-points", p);
 
@@ -391,9 +424,14 @@ async function openDrillForm(sourceId, { duplicate }) {
     document.getElementById("drill-form-title").textContent = `編輯 #${sourceId} ${source.title_zh}`;
     document.getElementById("d-id-label").innerHTML = `id：<b>#${sourceId}</b>（不可變更）`;
     document.getElementById("d-save-btn").disabled = false;
+    await wireDiagramEditor(sourceId, { preload: true });
   } else {
     document.getElementById("drill-form-title").textContent = duplicate ? `複製 #${sourceId} 建立新項目` : "新增訓練項目";
-    await refreshNextId();
+    const { data } = await api("GET", "/api/drills/next-id");
+    drillPendingId = data.next_id;
+    document.getElementById("d-id-label").innerHTML = `將配發 id：<b>#${drillPendingId}</b>`;
+    document.getElementById("d-save-btn").disabled = true;
+    await wireDiagramEditor(drillPendingId, { preload: false });
   }
 }
 
@@ -402,40 +440,13 @@ document.getElementById("d-cancel-btn").addEventListener("click", () => {
   document.getElementById("drill-form").hidden = true;
 });
 
-async function refreshNextId() {
-  const { data } = await api("GET", "/api/drills/next-id");
-  drillPendingId = data.next_id;
-  document.getElementById("d-id-label").innerHTML = `將配發 id：<b>#${drillPendingId}</b>`;
-  diagramConfirmed = false;
-  document.getElementById("d-diagram-status").textContent = "尚未檢查";
-  document.getElementById("d-save-btn").disabled = true;
-}
-
-document.getElementById("d-open-drillplot-btn").addEventListener("click", async () => {
-  const res = await fetch("/api/console-bridge-script");
-  const script = await res.text();
-  const ok = await copyToClipboard(script);
-  window.open(DRILLPLOT_URL, "_blank");
-  document.getElementById("d-status").textContent = ok
-    ? "連動腳本已複製，貼到 drillplot 頁面的 DevTools Console"
-    : "複製失敗——改用 GET /api/console-bridge-script 自己複製內容貼上";
-});
-
-document.getElementById("d-check-diagram-btn").addEventListener("click", async () => {
-  const { data } = await api("GET", `/api/diagram/exists?drill_id=${drillPendingId}`);
-  diagramConfirmed = data.exists;
-  document.getElementById("d-diagram-status").textContent = data.exists
-    ? `✅ 已找到 drill-${String(drillPendingId).padStart(2, "0")}.svg`
-    : "❌ 還沒畫好";
-  document.getElementById("d-save-btn").disabled = !data.exists;
-});
-
 document.getElementById("d-save-btn").addEventListener("click", async () => {
   const categoryCode = document.getElementById("d-category").value;
   const payload = {
     category_code: categoryCode,
     title_zh: document.getElementById("d-title-zh").value,
     title_en: document.getElementById("d-title-en").value,
+    summary: document.getElementById("d-summary").value,
     method: readDynamicList("d-method"),
     points: readDynamicList("d-points"),
   };
