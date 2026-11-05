@@ -18,14 +18,13 @@ categories:
       ball: diagonal
       move: none
     method:
-    - 雙方皆站在廚房線（Kitchen Line），以斜線丁克開始。
-    - 第一種模式：雙方只能打斜線。
+    - 雙方皆站在廚房線（Kitchen Line），以丁克開始。
     - 第二種模式：一人只能打直線，另一人只能打斜線，使用半場進行訓練。
     points:
     - 控制丁克的高度、深度與落點。
     - 建立固定方向的控球能力。
     - 練習在有限擊球選擇下維持穩定性。
-    summary: 雙方站在廚房線以斜線丁克開始，限制只能打斜線，或一人只能打直線、一人只能打斜線，練習固定方向的控球。
+    summary: 雙方站在廚房線以丁克開始，一人只能打直線、一人只能打斜線，練習固定方向的控球。
   - id: 2
     title_zh: 正反拍交叉丁克
     title_en: Forehand / Backhand Cross Dink
@@ -78,8 +77,8 @@ categories:
       ball: straight
       move: none
     method:
-    - A 站在底線，B 站在廚房線。
-    - A 從底線打長丁克，B 在廚房線以截擊方式回球。
+    - A 站在廚房線，B 站在底線。
+    - A 在廚房線回球，B 從底線打長丁克。
     - 雙方持續進行攻防練習。
     points:
     - A：練習長丁克的深度與落點控制。
