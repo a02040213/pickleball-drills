@@ -141,7 +141,42 @@ def test_list_drills_flattened(running_server):
     base, _ = running_server
     status, body = call("GET", f"{base}/api/drills")
     assert status == 200
-    assert body["drills"] == [{"id": 1, "title_zh": "既有", "category_code": "01"}]
+    assert body["drills"] == [{"id": 1, "title_zh": "既有", "category_code": "01", "hint": ""}]
+
+
+def test_get_drill_detail(running_server):
+    base, _ = running_server
+    status, body = call("GET", f"{base}/api/drills/1")
+    assert status == 200
+    assert body["title_zh"] == "既有"
+    assert body["category_code"] == "01"
+
+
+def test_get_drill_detail_missing_returns_404(running_server):
+    base, _ = running_server
+    status, _ = call("GET", f"{base}/api/drills/999")
+    assert status == 404
+
+
+def test_update_drill_changes_text_fields(running_server):
+    base, _ = running_server
+    status, body = call("PUT", f"{base}/api/drills/1", {
+        "category_code": "01", "title_zh": "改過的名稱", "title_en": "Renamed",
+        "method": ["新步驟"], "points": ["新重點"],
+    })
+    assert status == 200 and body["ok"] is True
+    status, body = call("GET", f"{base}/api/drills/1")
+    assert body["title_zh"] == "改過的名稱"
+    assert body["method"] == ["新步驟"]
+    assert body["diagram_file"] == "diagrams/drill-01.svg"  # unchanged by a text-only edit
+
+
+def test_update_drill_unknown_category_returns_400(running_server):
+    base, _ = running_server
+    status, body = call("PUT", f"{base}/api/drills/1", {
+        "category_code": "99", "title_zh": "x", "title_en": "x", "method": [], "points": [],
+    })
+    assert status == 400
 
 
 def test_commit_blocked_after_edit_following_a_passing_build(running_server):

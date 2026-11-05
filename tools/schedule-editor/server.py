@@ -105,7 +105,8 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/drills":
             doc = drills_store.load_drills_doc(state.drills_path)
-            flat = [{"id": d["id"], "title_zh": d["title_zh"], "category_code": c["code"]}
+            flat = [{"id": d["id"], "title_zh": d["title_zh"], "category_code": c["code"],
+                     "hint": (d.get("points") or [""])[0]}
                     for c in doc["categories"] for d in c["drills"]]
             return self._json(200, {"drills": flat})
 
@@ -114,6 +115,14 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/drills/next-id":
             return self._json(200, {"next_id": drills_store.next_drill_id(state.drills_path)})
+
+        if path.startswith("/api/drills/"):
+            try:
+                drill_id = int(path[len("/api/drills/"):])
+            except ValueError:
+                return self._json(404, {"error": "not found"})
+            drill = drills_store.get_drill(state.drills_path, drill_id)
+            return self._json(200, drill) if drill else self._json(404, {"error": "not found"})
 
         if path == "/api/diagram/list":
             return self._json(200, {"files": diagram_files.list_diagram_files(state.diagrams_dir)})
@@ -236,6 +245,28 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(500, {"error": str(e)})
             return self._json(200, {"ok": True, "output": output})
 
+        self._json(404, {"error": "unknown endpoint"})
+
+    def do_PUT(self):
+        state = self.server.state
+        path = urlparse(self.path).path
+        if path.startswith("/api/drills/"):
+            try:
+                drill_id = int(path[len("/api/drills/"):])
+            except ValueError:
+                return self._json(404, {"error": "not found"})
+            body = self._read_json()
+            state.build_ok = False
+            try:
+                drills_store.update_drill(
+                    state.drills_path, drill_id,
+                    category_code=body["category_code"], title_zh=body["title_zh"],
+                    title_en=body["title_en"], method=body["method"], points=body["points"],
+                )
+            except ValueError as e:
+                return self._json(400, {"error": str(e)})
+            state.last_change = {"kind": "drill", "title_zh": body["title_zh"]}
+            return self._json(200, {"ok": True})
         self._json(404, {"error": "unknown endpoint"})
 
     def do_DELETE(self):

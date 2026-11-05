@@ -41,3 +41,39 @@ def add_drill(path, category_code, drill):
         raise ValueError(f"drill id already used: {drill['id']}")
     category["drills"].append(drill)
     save_drills_doc(doc, path)
+
+
+def get_drill(path, drill_id):
+    doc = load_drills_doc(path)
+    for c in doc["categories"]:
+        for d in c["drills"]:
+            if d["id"] == drill_id:
+                return dict(d, category_code=c["code"])
+    return None
+
+
+def update_drill(path, drill_id, category_code, title_zh, title_en, method, points):
+    doc = load_drills_doc(path)
+    new_category = next((c for c in doc["categories"] if c["code"] == category_code), None)
+    if new_category is None:
+        raise ValueError(f"unknown category code: {category_code}")
+
+    old_category = drill = None
+    for c in doc["categories"]:
+        for d in c["drills"]:
+            if d["id"] == drill_id:
+                old_category, drill = c, d
+                break
+    if drill is None:
+        raise ValueError(f"unknown drill id: {drill_id}")
+
+    drill["title_zh"] = title_zh
+    drill["title_en"] = title_en
+    drill["method"] = method
+    drill["points"] = points
+
+    if old_category is not new_category:
+        old_category["drills"].remove(drill)
+        new_category["drills"].append(drill)
+
+    save_drills_doc(doc, path)
