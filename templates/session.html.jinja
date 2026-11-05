@@ -19,12 +19,33 @@
     var text = {{ session.export_text | tojson }};
     var btn = document.getElementById("copy-export-btn");
     var status = document.getElementById("copy-export-status");
+
+    function fallbackCopy(value) {
+      var ta = document.createElement("textarea");
+      ta.value = value;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
     btn.addEventListener("click", function () {
-      navigator.clipboard.writeText(text).then(function () {
-        status.textContent = "已複製！";
-      }, function () {
-        status.textContent = "複製失敗，請手動選取文字";
-      });
+      // navigator.clipboard needs a secure context (https, or http://localhost);
+      // GitHub Pages is https so this is the normal path in production.
+      if (window.isSecureContext && navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function () {
+          status.textContent = "已複製！";
+        }, function () {
+          status.textContent = fallbackCopy(text) ? "已複製！" : "複製失敗，請手動選取文字";
+        });
+      } else {
+        status.textContent = fallbackCopy(text) ? "已複製！" : "複製失敗，請手動選取文字";
+      }
     });
   })();
   </script>

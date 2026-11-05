@@ -17,14 +17,17 @@
   <section id="tab-sessions" class="tab-panel">
     <div class="pane list-pane">
       <h2>現有課表</h2>
-      <ul id="session-list"></ul>
+      <table>
+        <thead><tr><th>日期</th><th>訓練名稱</th><th></th><th></th></tr></thead>
+        <tbody id="session-list"></tbody>
+      </table>
       <button id="new-session-btn" type="button">+ 新增一天</button>
     </div>
 
     <form id="session-form" class="pane form-pane" hidden>
       <h2 id="session-form-title">新增一天</h2>
       <label>日期 <input type="date" id="f-date" required></label>
-      <label>標籤 <input type="text" id="f-label" required placeholder="例：11/20"></label>
+      <label>訓練名稱 <input type="text" id="f-label" required placeholder="例：11/20"></label>
       <label>熱身時長 <input type="text" id="f-warmup-duration" placeholder="例：10 分鐘"></label>
       <label>熱身備註 <input type="text" id="f-warmup-note"></label>
       <label>輪替說明 <textarea id="f-rotation-note"></textarea></label>
@@ -43,8 +46,17 @@
   </section>
 
   <section id="tab-drills" class="tab-panel" hidden>
-    <div class="pane form-pane">
-      <h2>新增訓練項目</h2>
+    <div class="pane list-pane">
+      <h2>現有訓練項目</h2>
+      <table>
+        <thead><tr><th>分類</th><th>名稱</th><th></th><th></th></tr></thead>
+        <tbody id="drill-list"></tbody>
+      </table>
+      <button id="new-drill-btn" type="button">+ 新增項目</button>
+    </div>
+
+    <form id="drill-form" class="pane form-pane" hidden>
+      <h2 id="drill-form-title">新增訓練項目</h2>
 
       <label>分類
         <select id="d-category"></select>
@@ -57,7 +69,7 @@
         <button type="button" id="d-cat-create-btn">建立分類</button>
       </div>
 
-      <p>將配發 id：<b id="d-next-id">-</b></p>
+      <p id="d-id-label">將配發 id：<b id="d-next-id">-</b></p>
       <label>中文標題 <input type="text" id="d-title-zh"></label>
       <label>英文標題 <input type="text" id="d-title-en"></label>
 
@@ -69,16 +81,20 @@
       <ol id="d-points"></ol>
       <button type="button" id="d-add-point-btn">+ 新增重點</button>
 
-      <h3>示意圖</h3>
-      <button type="button" id="d-open-drillplot-btn">開啟 drillplot + 複製連動腳本</button>
-      <button type="button" id="d-check-diagram-btn">重新檢查</button>
-      <span id="d-diagram-status">尚未檢查</span>
+      <div id="d-diagram-section">
+        <h3>示意圖</h3>
+        <button type="button" id="d-open-drillplot-btn">開啟 drillplot + 複製連動腳本</button>
+        <button type="button" id="d-check-diagram-btn">重新檢查</button>
+        <span id="d-diagram-status">尚未檢查</span>
+      </div>
+      <p id="d-edit-diagram-note" hidden>圖已存在，這裡不重畫——要改圖請用 <code>tools/drillplot-bridge/</code>。</p>
 
       <div class="form-actions">
         <button type="button" id="d-save-btn" disabled>存檔</button>
+        <button type="button" id="d-cancel-btn">取消</button>
       </div>
       <p id="d-status" role="status"></p>
-    </div>
+    </form>
   </section>
 </main>
 
@@ -95,5 +111,6 @@
 </footer>
 
 <script src="session-merge.js"></script>
+<script src="date-utils.js"></script>
 <script src="app.js"></script>
 </body></html>
