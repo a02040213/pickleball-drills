@@ -19,7 +19,7 @@ def list_sessions(path):
     doc = load_sessions_doc(path)
     return sorted(
         [{"date": s["date"], "label": s["label"]} for s in doc["sessions"]],
-        key=lambda s: s["date"],
+        key=lambda s: s["date"], reverse=True,
     )
 
 

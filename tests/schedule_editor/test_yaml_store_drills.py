@@ -122,3 +122,25 @@ def test_update_drill_rejects_unknown_category(tmp_path):
     ])
     with pytest.raises(ValueError):
         update_drill(path, 1, category_code="99", title_zh="x", title_en="x", method=[], points=[])
+
+
+def test_update_drill_sets_summary(tmp_path):
+    path = make_drills_file(tmp_path, [
+        {"code": "01", "title_zh": "A", "drills": [
+            {"id": 1, "title_zh": "x", "title_en": "x", "method": [], "points": [], "diagram_file": "diagrams/drill-01.svg"},
+        ]},
+    ])
+    update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[],
+                  summary="兩人在網前以 60–75% 力量截擊。")
+    assert get_drill(path, 1)["summary"] == "兩人在網前以 60–75% 力量截擊。"
+
+
+def test_update_drill_clears_summary_when_blank(tmp_path):
+    path = make_drills_file(tmp_path, [
+        {"code": "01", "title_zh": "A", "drills": [
+            {"id": 1, "title_zh": "x", "title_en": "x", "method": [], "points": [],
+             "diagram_file": "diagrams/drill-01.svg", "summary": "舊的簡述"},
+        ]},
+    ])
+    update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[], summary="")
+    assert "summary" not in get_drill(path, 1)

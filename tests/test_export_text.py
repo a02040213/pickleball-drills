@@ -6,8 +6,11 @@ import build as build_module
 from build import render_export_text
 
 DRILLS_BY_ID = {
-    1: {"title_zh": "限制丁克", "points": ["控制丁克的高度、深度與落點。", "次要重點"]},
-    2: {"title_zh": "正反拍交叉丁克", "points": []},
+    1: {"title_zh": "限制丁克", "title_en": "Restricted Dink",
+        "points": ["控制丁克的高度、深度與落點。", "次要重點"]},
+    2: {"title_zh": "正反拍交叉丁克", "title_en": "Forehand / Backhand Cross Dink", "points": [],
+        "summary": "兩人在網前以 60–75% 力量截擊，只求球不落地、不求致勝。"},
+    3: {"title_zh": "無題無簡述", "points": []},
 }
 
 DEFAULTS = {"header": "🏓 匹克球課表", "footer": "有事請提前跟我說，謝謝！"}
@@ -36,18 +39,41 @@ def test_full_session_with_defaults():
         "🏓 匹克球課表\n\n"
         "🔥 熱身 10 分鐘：兩兩一組熱身\n\n"
         "三人一組輪替\n\n"
-        "🏐 40 分鐘｜限制丁克\n"
-        "   💡 控制丁克的高度、深度與落點。\n\n"
-        "🏐 20 分鐘｜正反拍交叉丁克\n\n"
+        "1️⃣ *限制丁克 40 分鐘*\n"
+        "Restricted Dink\n\n"
+        "2️⃣ *正反拍交叉丁克 20 分鐘*\n"
+        "兩人在網前以 60–75% 力量截擊，只求球不落地、不求致勝。\n\n"
         "⏱ 預估總時長：60 分鐘\n\n"
         "有事請提前跟我說，謝謝！"
     )
 
 
-def test_block_with_empty_points_omits_highlight_line():
-    text = render_export_text(make_session(), DRILLS_BY_ID, DEFAULTS)
-    assert "🏐 20 分鐘｜正反拍交叉丁克\n\n" in text
-    assert "🏐 20 分鐘｜正反拍交叉丁克\n   💡" not in text
+def test_block_detail_prefers_summary_over_title_en():
+    session = make_session(blocks=[{"duration": "20 分鐘", "drill_id": 2}])
+    text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
+    assert "兩人在網前以 60–75% 力量截擊" in text
+    assert "Forehand / Backhand Cross Dink" not in text
+
+
+def test_block_falls_back_to_title_en_without_summary():
+    session = make_session(blocks=[{"duration": "40 分鐘", "drill_id": 1}])
+    text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
+    assert "1️⃣ *限制丁克 40 分鐘*\nRestricted Dink" in text
+
+
+def test_block_without_summary_or_title_en_omits_detail_line():
+    session = make_session(blocks=[{"duration": "20 分鐘", "drill_id": 3}])
+    text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
+    assert "1️⃣ *無題無簡述 20 分鐘*\n\n" in text
+
+
+def test_items_beyond_nine_fall_back_to_plain_numbering():
+    blocks = [{"duration": "10 分鐘", "drill_id": 3} for _ in range(11)]
+    session = make_session(blocks=blocks)
+    text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
+    assert "9️⃣ *無題無簡述 10 分鐘*" in text
+    assert "🔟 *無題無簡述 10 分鐘*" in text
+    assert "11. *無題無簡述 10 分鐘*" in text
 
 
 def test_per_session_header_footer_overrides_defaults():
@@ -61,7 +87,7 @@ def test_missing_rotation_note_omits_line():
     session = make_session(rotation_note=None)
     text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
     assert "三人一組輪替" not in text
-    assert "🔥 熱身 10 分鐘：兩兩一組熱身\n\n🏐 40 分鐘" in text
+    assert "🔥 熱身 10 分鐘：兩兩一組熱身\n\n1️⃣ *限制丁克 40 分鐘*" in text
 
 
 def test_missing_total_omits_total_line():

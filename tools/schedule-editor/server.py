@@ -201,6 +201,8 @@ class Handler(BaseHTTPRequestHandler):
                 "method": body["method"], "points": body["points"],
                 "diagram_file": f"diagrams/drill-{drill_id:02d}.svg",
             }
+            if body.get("summary"):
+                drill["summary"] = body["summary"]
             try:
                 drills_store.add_drill(state.drills_path, body["category_code"], drill)
             except ValueError as e:
@@ -262,6 +264,7 @@ class Handler(BaseHTTPRequestHandler):
                     state.drills_path, drill_id,
                     category_code=body["category_code"], title_zh=body["title_zh"],
                     title_en=body["title_en"], method=body["method"], points=body["points"],
+                    summary=body.get("summary"),
                 )
             except ValueError as e:
                 return self._json(400, {"error": str(e)})

@@ -15,12 +15,12 @@ def make_doc_file(tmp_path, sessions):
     return path
 
 
-def test_list_sessions_sorted_by_date(tmp_path):
+def test_list_sessions_sorted_by_date_descending(tmp_path):
     path = make_doc_file(tmp_path, [
-        {"date": "2026-11-13", "label": "11/13"},
         {"date": "2026-11-06", "label": "11/6"},
+        {"date": "2026-11-13", "label": "11/13"},
     ])
-    assert [s["date"] for s in list_sessions(path)] == ["2026-11-06", "2026-11-13"]
+    assert [s["date"] for s in list_sessions(path)] == ["2026-11-13", "2026-11-06"]
 
 
 def test_get_session_returns_none_when_missing(tmp_path):

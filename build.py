@@ -75,6 +75,16 @@ def read_diagram_file(rel_path):
     return svg.replace("<svg ", '<svg class="court-icon" ', 1)
 
 
+KEYCAP_DIGITS = {
+    1: "1️⃣", 2: "2️⃣", 3: "3️⃣", 4: "4️⃣", 5: "5️⃣",
+    6: "6️⃣", 7: "7️⃣", 8: "8️⃣", 9: "9️⃣", 10: "🔟",
+}
+
+
+def _item_marker(n):
+    return KEYCAP_DIGITS.get(n, f"{n}.")
+
+
 def render_export_text(session, drills_by_id, defaults):
     header = session.get("export_header") or defaults.get("header") or ""
     footer = session.get("export_footer") or defaults.get("footer") or ""
@@ -88,11 +98,12 @@ def render_export_text(session, drills_by_id, defaults):
         sections.append(session["rotation_note"])
 
     block_lines = []
-    for block in session["blocks"]:
+    for i, block in enumerate(session["blocks"], start=1):
         drill = drills_by_id[block["drill_id"]]
-        line = f"🏐 {block['duration']}｜{drill['title_zh']}"
-        if drill.get("points"):
-            line += f"\n   💡 {drill['points'][0]}"
+        line = f"{_item_marker(i)} *{drill['title_zh']} {block['duration']}*"
+        detail = drill.get("summary") or drill.get("title_en") or ""
+        if detail:
+            line += f"\n{detail}"
         block_lines.append(line)
     if block_lines:
         sections.append("\n\n".join(block_lines))
@@ -161,6 +172,7 @@ def main():
 
     data = yaml.safe_load((ROOT / "content" / "drills.yaml").read_text(encoding="utf-8"))
     sessions_data = yaml.safe_load((ROOT / "content" / "sessions.yaml").read_text(encoding="utf-8"))
+    sessions_data["sessions"].sort(key=lambda s: s["date"], reverse=True)
     sessions = sessions_data["sessions"]
     css = (ROOT / "assets" / "style.css").read_text(encoding="utf-8")
 

@@ -179,6 +179,29 @@ def test_update_drill_unknown_category_returns_400(running_server):
     assert status == 400
 
 
+def test_update_drill_sets_summary(running_server):
+    base, _ = running_server
+    status, _ = call("PUT", f"{base}/api/drills/1", {
+        "category_code": "01", "title_zh": "既有", "title_en": "Existing",
+        "method": [], "points": [], "summary": "簡短說明",
+    })
+    assert status == 200
+    status, body = call("GET", f"{base}/api/drills/1")
+    assert body["summary"] == "簡短說明"
+
+
+def test_add_drill_with_summary(running_server):
+    base, repo = running_server
+    (repo / "assets" / "diagrams" / "drill-02.svg").write_text("<svg/>")
+    status, body = call("POST", f"{base}/api/drills", {
+        "category_code": "01", "title_zh": "新招式", "title_en": "New Move",
+        "method": ["x"], "points": ["x"], "summary": "一句話簡述",
+    })
+    assert status == 200
+    status, body = call("GET", f"{base}/api/drills/{body['id']}")
+    assert body["summary"] == "一句話簡述"
+
+
 def test_commit_blocked_after_edit_following_a_passing_build(running_server):
     base, repo = running_server
     (repo / "content" / "sessions.yaml").write_text("export_defaults: {}\nsessions: []\n", encoding="utf-8")
