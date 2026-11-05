@@ -1,37 +1,36 @@
 export_defaults:
-  header: "🏓 匹克球課表"
-  footer: "有事請提前跟我說，謝謝！"
+  header: 🏓 匹克球課表
+  footer: 有事請提前跟我說，謝謝！
 sessions:
-  - date: "2026-11-06"
-    label: "11/6"
-    warmup:
-      duration: 10 分鐘
-      note: 兩兩一組熱身
-    rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
-    blocks:
-      - duration: 40 分鐘
-        drill_id: 2
-      - duration: 20 分鐘
-        drill_id: 4
-      - duration: 20 分鐘
-        drill_id: 6
-      - duration: 20 分鐘
-        drill_id: 13
-
-  - date: "2026-11-13"
-    label: "11/13"
-    warmup:
-      duration: 10 分鐘
-      note: 兩兩一組熱身
-    rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
-    blocks:
-      - duration: 20 分鐘
-        drill_id: 1
-      - duration: 20 分鐘
-        drill_id: 10
-      - duration: 20 分鐘
-        drill_id: 17
-      - duration: 20 分鐘
-        drill_id: 7
-      - duration: 30 分鐘
-        drill_id: 18
+- date: '2026-11-06'
+  label: 11/6
+  warmup:
+    duration: 10 分鐘
+    note: 兩兩一組熱身
+  rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
+  blocks:
+  - duration: 40 分鐘
+    drill_id: 2
+  - duration: 20 分鐘
+    drill_id: 4
+  - duration: 20 分鐘
+    drill_id: 6
+  - duration: 20 分鐘
+    drill_id: 13
+- date: '2026-11-13'
+  label: 11/13
+  warmup:
+    duration: 10 分鐘
+    note: 兩兩一組熱身
+  rotation_note: 以下四項，三人一組，兩人打一人休，輪三個組合
+  blocks:
+  - duration: 20 分鐘
+    drill_id: 1
+  - duration: 20 分鐘
+    drill_id: 10
+  - duration: 20 分鐘
+    drill_id: 17
+  - duration: 20 分鐘
+    drill_id: 7
+  - duration: 30 分鐘
+    drill_id: 18
