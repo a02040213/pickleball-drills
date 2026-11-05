@@ -75,6 +75,36 @@ def read_diagram_file(rel_path):
     return svg.replace("<svg ", '<svg class="court-icon" ', 1)
 
 
+def render_export_text(session, drills_by_id, defaults):
+    header = session.get("export_header") or defaults.get("header") or ""
+    footer = session.get("export_footer") or defaults.get("footer") or ""
+
+    warmup = session["warmup"]
+    sections = []
+    if header:
+        sections.append(header)
+    sections.append(f"🔥 熱身 {warmup['duration']}：{warmup['note']}")
+    if session.get("rotation_note"):
+        sections.append(session["rotation_note"])
+
+    block_lines = []
+    for block in session["blocks"]:
+        drill = drills_by_id[block["drill_id"]]
+        line = f"🏐 {block['duration']}｜{drill['title_zh']}"
+        if drill.get("points"):
+            line += f"\n   💡 {drill['points'][0]}"
+        block_lines.append(line)
+    if block_lines:
+        sections.append("\n\n".join(block_lines))
+
+    if session.get("total"):
+        sections.append(f"⏱ 預估總時長：{session['total']}")
+    if footer:
+        sections.append(footer)
+
+    return "\n\n".join(sections)
+
+
 def minutes_of(label):
     if not label:
         return None
@@ -104,15 +134,17 @@ def build_index(data, css, env, output_dir, sessions):
     print(f"built {output_dir / 'index.html'}")
 
 
-def build_sessions(sessions, drills_by_id, css, env, output_dir):
+def build_sessions(sessions_data, drills_by_id, css, env, output_dir):
     schedule_dir = output_dir / "schedule"
     schedule_dir.mkdir(parents=True, exist_ok=True)
     template = env.get_template("session.html.jinja")
+    sessions = sessions_data["sessions"]
 
     for session in sessions:
         minutes = [minutes_of(session["warmup"].get("duration"))]
         minutes += [minutes_of(b.get("duration")) for b in session["blocks"]]
         session["total"] = f"{sum(minutes)} 分鐘" if all(m is not None for m in minutes) else None
+        session["export_text"] = render_export_text(session, drills_by_id, sessions_data.get("export_defaults", {}))
         for block in session["blocks"]:
             block["drill"] = drills_by_id[block["drill_id"]]
 
@@ -140,7 +172,7 @@ def main():
     drills_by_id = {drill["id"]: drill for cat in data["categories"] for drill in cat["drills"]}
 
     build_index(data, css, env, output_dir, sessions)
-    build_sessions(sessions, drills_by_id, css, env, output_dir)
+    build_sessions(sessions_data, drills_by_id, css, env, output_dir)
 
 
 if __name__ == "__main__":
