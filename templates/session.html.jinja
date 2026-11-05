@@ -12,6 +12,22 @@
 <div class="hero">
   <p class="kicker">Session Schedule</p>
   <h1>匹克球課表（{{ session.label }}）</h1>
+  <button id="copy-export-btn" type="button">複製文字</button>
+  <span id="copy-export-status" aria-live="polite"></span>
+  <script>
+  (function () {
+    var text = {{ session.export_text | tojson }};
+    var btn = document.getElementById("copy-export-btn");
+    var status = document.getElementById("copy-export-status");
+    btn.addEventListener("click", function () {
+      navigator.clipboard.writeText(text).then(function () {
+        status.textContent = "已複製！";
+      }, function () {
+        status.textContent = "複製失敗，請手動選取文字";
+      });
+    });
+  })();
+  </script>
 </div>
 
 <section class="session-block warmup">
