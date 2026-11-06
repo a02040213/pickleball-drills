@@ -1,6 +1,15 @@
 export_defaults:
-  header: 🏓 匹克球課表
-  footer: 有事請提前跟我說，謝謝！
+  header: '📋 {date} 匹克球課表 {label}'
+  base_url: https://a02040213.github.io/pickleball-drills/
+  footer: |-
+    收費 350/人 地點：羽神拍拍
+    報名名單：
+    1.Willy
+    2.Sylvia
+    3.
+    4.
+    5.
+    6.
 sessions:
 - date: '2026-11-06'
   label: cross dink, drop, reset, overhead

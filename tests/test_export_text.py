@@ -39,9 +39,9 @@ def test_full_session_with_defaults():
         "🏓 匹克球課表\n\n"
         "🔥 熱身 10 分鐘：兩兩一組熱身\n\n"
         "三人一組輪替\n\n"
-        "1️⃣ *限制丁克 40 分鐘*\n"
+        "1️⃣ 限制丁克 40 分鐘\n"
         "Restricted Dink\n\n"
-        "2️⃣ *正反拍交叉丁克 20 分鐘*\n"
+        "2️⃣ 正反拍交叉丁克 20 分鐘\n"
         "兩人在網前以 60–75% 力量截擊，只求球不落地、不求致勝。\n\n"
         "⏱ 預估總時長：60 分鐘\n\n"
         "有事請提前跟我說，謝謝！"
@@ -58,22 +58,22 @@ def test_block_detail_prefers_summary_over_title_en():
 def test_block_falls_back_to_title_en_without_summary():
     session = make_session(blocks=[{"duration": "40 分鐘", "drill_id": 1}])
     text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
-    assert "1️⃣ *限制丁克 40 分鐘*\nRestricted Dink" in text
+    assert "1️⃣ 限制丁克 40 分鐘\nRestricted Dink" in text
 
 
 def test_block_without_summary_or_title_en_omits_detail_line():
     session = make_session(blocks=[{"duration": "20 分鐘", "drill_id": 3}])
     text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
-    assert "1️⃣ *無題無簡述 20 分鐘*\n\n" in text
+    assert "1️⃣ 無題無簡述 20 分鐘\n\n" in text
 
 
 def test_items_beyond_nine_fall_back_to_plain_numbering():
     blocks = [{"duration": "10 分鐘", "drill_id": 3} for _ in range(11)]
     session = make_session(blocks=blocks)
     text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
-    assert "9️⃣ *無題無簡述 10 分鐘*" in text
-    assert "🔟 *無題無簡述 10 分鐘*" in text
-    assert "11. *無題無簡述 10 分鐘*" in text
+    assert "9️⃣ 無題無簡述 10 分鐘" in text
+    assert "🔟 無題無簡述 10 分鐘" in text
+    assert "11. 無題無簡述 10 分鐘" in text
 
 
 def test_per_session_header_footer_overrides_defaults():
@@ -87,7 +87,7 @@ def test_missing_rotation_note_omits_line():
     session = make_session(rotation_note=None)
     text = render_export_text(session, DRILLS_BY_ID, DEFAULTS)
     assert "三人一組輪替" not in text
-    assert "🔥 熱身 10 分鐘：兩兩一組熱身\n\n1️⃣ *限制丁克 40 分鐘*" in text
+    assert "🔥 熱身 10 分鐘：兩兩一組熱身\n\n1️⃣ 限制丁克 40 分鐘" in text
 
 
 def test_missing_total_omits_total_line():
@@ -101,6 +101,39 @@ def test_empty_header_and_footer_defaults_omit_those_sections():
     text = render_export_text(session, {}, {"header": "", "footer": ""})
     assert not text.startswith("\n")
     assert text.startswith("🔥 熱身")
+
+
+def test_header_template_interpolates_date_and_label_with_link():
+    session = make_session(date="2026-11-06", label="丁克特訓")
+    defaults = {
+        "header": "📋 {date} 匹克球課表 {label}",
+        "base_url": "https://a02040213.github.io/pickleball-drills/",
+        "footer": DEFAULTS["footer"],
+    }
+    text = render_export_text(session, DRILLS_BY_ID, defaults)
+    assert text.startswith(
+        "📋 2026-11-06 匹克球課表 丁克特訓\n\n"
+        "課表詳細連結：https://a02040213.github.io/pickleball-drills/schedule/2026-11-06.html\n\n"
+    )
+
+
+def test_header_template_without_base_url_omits_link_line():
+    session = make_session(date="2026-11-06", label="丁克特訓")
+    defaults = {"header": "📋 {date} 匹克球課表 {label}", "footer": DEFAULTS["footer"]}
+    text = render_export_text(session, DRILLS_BY_ID, defaults)
+    assert "課表詳細連結" not in text
+
+
+def test_per_session_header_override_skips_link_even_with_base_url():
+    session = make_session(date="2026-11-06", export_header="🏐 球隊課表")
+    defaults = {
+        "header": "📋 {date} 匹克球課表 {label}",
+        "base_url": "https://a02040213.github.io/pickleball-drills/",
+        "footer": DEFAULTS["footer"],
+    }
+    text = render_export_text(session, DRILLS_BY_ID, defaults)
+    assert text.startswith("🏐 球隊課表\n\n")
+    assert "課表詳細連結" not in text
 
 
 def test_build_sessions_tolerates_null_export_defaults(tmp_path):

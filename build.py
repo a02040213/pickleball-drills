@@ -86,13 +86,20 @@ def _item_marker(n):
 
 
 def render_export_text(session, drills_by_id, defaults):
-    header = session.get("export_header") or defaults.get("header") or ""
+    custom_header = session.get("export_header")
     footer = session.get("export_footer") or defaults.get("footer") or ""
 
     warmup = session["warmup"]
     sections = []
-    if header:
-        sections.append(header)
+    if custom_header:
+        sections.append(custom_header)
+    else:
+        header_tpl = defaults.get("header") or ""
+        if header_tpl:
+            sections.append(header_tpl.format(date=session.get("date", ""), label=session.get("label", "")))
+            base_url = defaults.get("base_url")
+            if base_url:
+                sections.append(f"課表詳細連結：{base_url.rstrip('/')}/schedule/{session.get('date', '')}.html")
     sections.append(f"🔥 熱身 {warmup['duration']}：{warmup['note']}")
     if session.get("rotation_note"):
         sections.append(session["rotation_note"])
@@ -100,7 +107,7 @@ def render_export_text(session, drills_by_id, defaults):
     block_lines = []
     for i, block in enumerate(session["blocks"], start=1):
         drill = drills_by_id[block["drill_id"]]
-        line = f"{_item_marker(i)} *{drill['title_zh']} {block['duration']}*"
+        line = f"{_item_marker(i)} {drill['title_zh']} {block['duration']}"
         detail = drill.get("summary") or drill.get("title_en") or ""
         if detail:
             line += f"\n{detail}"
