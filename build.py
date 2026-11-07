@@ -2,6 +2,7 @@
 """Render content/drills.yaml + content/sessions.yaml into public/."""
 import argparse
 import re
+import shutil
 from pathlib import Path
 
 import yaml
@@ -192,6 +193,7 @@ def main():
 
     build_index(data, css, env, output_dir, sessions)
     build_sessions(sessions_data, drills_by_id, css, env, output_dir)
+    shutil.copy(ROOT / "assets" / "og-image.png", output_dir / "og-image.png")
 
 
 if __name__ == "__main__":
