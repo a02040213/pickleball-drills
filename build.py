@@ -73,7 +73,9 @@ def render_diagram(a_zone, b_zone, ball, move, uid):
 def read_diagram_file(rel_path):
     """Inline a drillplot-exported SVG (see assets/diagrams/README.md)."""
     svg = (ROOT / "assets" / rel_path).read_text(encoding="utf-8")
-    return svg.replace("<svg ", '<svg class="court-icon" ', 1)
+    m = re.search(r'<svg[^>]*\bwidth="([\d.]+)"[^>]*\bheight="([\d.]+)"', svg)
+    aspect_style = f' style="aspect-ratio:{m.group(1)}/{m.group(2)}"' if m else ""
+    return svg.replace("<svg ", f'<svg class="court-icon"{aspect_style} ', 1)
 
 
 KEYCAP_DIGITS = {
