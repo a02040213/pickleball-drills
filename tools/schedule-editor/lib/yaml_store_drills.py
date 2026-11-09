@@ -52,7 +52,8 @@ def get_drill(path, drill_id):
     return None
 
 
-def update_drill(path, drill_id, category_code, title_zh, title_en, method, points, summary=None):
+def update_drill(path, drill_id, category_code, title_zh, title_en, method, points, summary=None,
+                  default_rotations=None, default_briefing=None):
     doc = load_drills_doc(path)
     new_category = next((c for c in doc["categories"] if c["code"] == category_code), None)
     if new_category is None:
@@ -75,6 +76,16 @@ def update_drill(path, drill_id, category_code, title_zh, title_en, method, poin
         drill["summary"] = summary
     else:
         drill.pop("summary", None)
+
+    if default_rotations:
+        drill["default_rotations"] = default_rotations
+    else:
+        drill.pop("default_rotations", None)
+
+    if default_briefing is not None:
+        drill["default_briefing"] = default_briefing
+    else:
+        drill.pop("default_briefing", None)
 
     if old_category is not new_category:
         old_category["drills"].remove(drill)

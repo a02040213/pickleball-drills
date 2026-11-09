@@ -75,6 +75,9 @@ async function refreshSessionList() {
   return data.sessions.map((s) => s.date);
 }
 
+const DEFAULT_ROTATIONS = 3;
+const DEFAULT_BRIEFING_MINUTES = 1;
+
 function blockRowElement(block) {
   const li = document.createElement("li");
   li.dataset.role = "block-row";
@@ -100,9 +103,35 @@ function blockRowElement(block) {
   const duration = document.createElement("input");
   duration.type = "number";
   duration.min = "1";
+  duration.dataset.role = "duration";
   duration.value = block ? (parseInt(block.duration, 10) || 20) : 20;
   const unit = document.createElement("span");
   unit.textContent = "分鐘";
+
+  const rotations = document.createElement("input");
+  rotations.type = "number";
+  rotations.min = "1";
+  rotations.dataset.role = "rotations";
+  const rotationsUnit = document.createElement("span");
+  rotationsUnit.textContent = "輪";
+
+  const briefing = document.createElement("input");
+  briefing.type = "number";
+  briefing.min = "0";
+  briefing.dataset.role = "briefing";
+  const briefingUnit = document.createElement("span");
+  briefingUnit.textContent = "分鐘說明";
+
+  function applyDrillDefaults() {
+    const drill = drillsCache.find((d) => d.id === Number(select.value));
+    rotations.value = (drill && drill.default_rotations) || DEFAULT_ROTATIONS;
+    briefing.value = (drill && drill.default_briefing) || DEFAULT_BRIEFING_MINUTES;
+  }
+
+  applyDrillDefaults();
+  if (block && block.rotations != null) rotations.value = block.rotations;
+  if (block && block.briefing != null) briefing.value = block.briefing;
+  select.addEventListener("change", applyDrillDefaults);
 
   const up = document.createElement("button");
   up.type = "button";
@@ -126,6 +155,10 @@ function blockRowElement(block) {
   li.appendChild(select);
   li.appendChild(duration);
   li.appendChild(unit);
+  li.appendChild(rotations);
+  li.appendChild(rotationsUnit);
+  li.appendChild(briefing);
+  li.appendChild(briefingUnit);
   li.appendChild(up);
   li.appendChild(down);
   li.appendChild(del);
@@ -141,8 +174,15 @@ document.getElementById("add-block-btn").addEventListener("click", () => addBloc
 function readBlocksFromForm() {
   return Array.from(document.querySelectorAll('#f-blocks li[data-role="block-row"]')).map((li) => {
     const select = li.querySelector("select");
-    const input = li.querySelector("input");
-    return { drill_id: Number(select.value), duration: `${input.value} 分鐘` };
+    const duration = li.querySelector('input[data-role="duration"]');
+    const rotations = li.querySelector('input[data-role="rotations"]');
+    const briefing = li.querySelector('input[data-role="briefing"]');
+    return {
+      drill_id: Number(select.value),
+      duration: `${duration.value} 分鐘`,
+      rotations: Number(rotations.value),
+      briefing: Number(briefing.value),
+    };
   });
 }
 
@@ -417,6 +457,8 @@ async function openDrillForm(sourceId, { duplicate }) {
   document.getElementById("d-title-zh").value = source ? source.title_zh : "";
   document.getElementById("d-title-en").value = source ? source.title_en : "";
   document.getElementById("d-summary").value = source ? (source.summary || "") : "";
+  document.getElementById("d-default-rotations").value = source ? (source.default_rotations ?? "") : "";
+  document.getElementById("d-default-briefing").value = source ? (source.default_briefing ?? "") : "";
   for (const m of (source ? source.method : [])) addDynamicListItem("d-method", m);
   for (const p of (source ? source.points : [])) addDynamicListItem("d-points", p);
 
@@ -442,6 +484,8 @@ document.getElementById("d-cancel-btn").addEventListener("click", () => {
 
 document.getElementById("d-save-btn").addEventListener("click", async () => {
   const categoryCode = document.getElementById("d-category").value;
+  const defaultRotations = document.getElementById("d-default-rotations").value;
+  const defaultBriefing = document.getElementById("d-default-briefing").value;
   const payload = {
     category_code: categoryCode,
     title_zh: document.getElementById("d-title-zh").value,
@@ -449,6 +493,8 @@ document.getElementById("d-save-btn").addEventListener("click", async () => {
     summary: document.getElementById("d-summary").value,
     method: readDynamicList("d-method"),
     points: readDynamicList("d-points"),
+    default_rotations: defaultRotations ? Number(defaultRotations) : null,
+    default_briefing: defaultBriefing ? Number(defaultBriefing) : null,
   };
   const statusEl = document.getElementById("d-status");
 

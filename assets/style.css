@@ -136,3 +136,17 @@ li.session-block{background:var(--card);border:1px solid var(--line);border-radi
 
 .total{font-size:13.5px;color:var(--sub);text-align:center;margin-top:20px;}
 .total b{color:var(--ink);}
+
+#start-timer-btn{margin-left:8px;}
+
+#timer-panel{position:relative;z-index:0;overflow:hidden;display:flex;flex-direction:column;justify-content:center;min-height:100vh;min-height:100dvh;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px;text-align:center;}
+#timer-fill{position:absolute;z-index:-1;top:0;left:0;bottom:0;width:0;background:rgba(61,122,74,0.3);transition:width 1s linear;}
+#timer-progress{font-size:12.5px;color:var(--sub);margin:0 0 6px;}
+#timer-phase-label{font-size:18px;font-weight:700;margin:0 0 14px;}
+#timer-diagram{width:160px;margin:0 auto 14px;}
+#timer-diagram .court-icon{width:100%;height:auto;display:block;}
+#timer-display{font-size:72px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent-ink);margin:0 0 10px;line-height:1;}
+#timer-next-preview{font-size:13.5px;color:var(--sub);margin:0 0 16px;}
+#timer-controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+#timer-controls button{font-size:14px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);}
+#timer-controls button:active{background:var(--accent-bg);}

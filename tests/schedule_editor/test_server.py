@@ -141,7 +141,8 @@ def test_list_drills_flattened(running_server):
     base, _ = running_server
     status, body = call("GET", f"{base}/api/drills")
     assert status == 200
-    assert body["drills"] == [{"id": 1, "title_zh": "既有", "category_code": "01", "hint": ""}]
+    assert body["drills"] == [{"id": 1, "title_zh": "既有", "category_code": "01", "hint": "",
+                               "default_rotations": None, "default_briefing": None}]
 
 
 def test_get_existing_diagram_file(running_server):

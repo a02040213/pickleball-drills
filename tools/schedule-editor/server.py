@@ -85,7 +85,9 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/drills":
             doc = drills_store.load_drills_doc(state.drills_path)
             flat = [{"id": d["id"], "title_zh": d["title_zh"], "category_code": c["code"],
-                     "hint": (d.get("points") or [""])[0]}
+                     "hint": (d.get("points") or [""])[0],
+                     "default_rotations": d.get("default_rotations"),
+                     "default_briefing": d.get("default_briefing")}
                     for c in doc["categories"] for d in c["drills"]]
             return self._json(200, {"drills": flat})
 
@@ -165,6 +167,10 @@ class Handler(BaseHTTPRequestHandler):
             }
             if body.get("summary"):
                 drill["summary"] = body["summary"]
+            if body.get("default_rotations"):
+                drill["default_rotations"] = body["default_rotations"]
+            if body.get("default_briefing") is not None:
+                drill["default_briefing"] = body["default_briefing"]
             try:
                 drills_store.add_drill(state.drills_path, body["category_code"], drill)
             except ValueError as e:
@@ -227,6 +233,8 @@ class Handler(BaseHTTPRequestHandler):
                     category_code=body["category_code"], title_zh=body["title_zh"],
                     title_en=body["title_en"], method=body["method"], points=body["points"],
                     summary=body.get("summary"),
+                    default_rotations=body.get("default_rotations"),
+                    default_briefing=body.get("default_briefing"),
                 )
             except ValueError as e:
                 return self._json(400, {"error": str(e)})

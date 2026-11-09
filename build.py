@@ -133,6 +133,54 @@ def minutes_of(label):
     return int(m.group(1)) if m else None
 
 
+DEFAULT_ROTATIONS = 3
+DEFAULT_BRIEFING_MINUTES = 1
+
+
+def rotation_seconds_list(duration_minutes, briefing_minutes, rotations):
+    """Split (duration - briefing) evenly into `rotations` whole-second chunks.
+
+    Any remainder from integer division goes into the last rotation so the
+    chunks always sum to exactly (duration - briefing) * 60.
+    """
+    total_seconds = max((duration_minutes - briefing_minutes) * 60, 0)
+    base, remainder = divmod(total_seconds, rotations)
+    return [base] * (rotations - 1) + [base + remainder]
+
+
+def build_block_timer(block, drill, duration_minutes):
+    briefing_minutes = block.get("briefing", drill.get("default_briefing", DEFAULT_BRIEFING_MINUTES))
+    rotations = block.get("rotations", drill.get("default_rotations", DEFAULT_ROTATIONS))
+    return {
+        "briefing_seconds": briefing_minutes * 60,
+        "rotation_seconds": rotation_seconds_list(duration_minutes, briefing_minutes, rotations),
+    }
+
+
+def build_timeline(session):
+    """Flatten warmup + each block's briefing/rotations into one ordered list of
+    timer phases for the front-end countdown to step through."""
+    timeline = []
+    warmup_seconds = session["warmup"].get("timer_seconds")
+    if warmup_seconds is not None:
+        timeline.append({"type": "warmup", "seconds": warmup_seconds})
+
+    for i, block in enumerate(session["blocks"]):
+        timer = block.get("timer")
+        if not timer:
+            continue
+        if timer["briefing_seconds"] > 0:
+            timeline.append({"type": "briefing", "blockIndex": i, "seconds": timer["briefing_seconds"]})
+        rotations_total = len(timer["rotation_seconds"])
+        for r, seconds in enumerate(timer["rotation_seconds"]):
+            timeline.append({
+                "type": "rotation", "blockIndex": i,
+                "rotationIndex": r, "rotationsTotal": rotations_total,
+                "seconds": seconds,
+            })
+    return timeline
+
+
 def build_index(data, css, env, output_dir, sessions):
     for cat in data["categories"]:
         for drill in cat["drills"]:
@@ -166,8 +214,15 @@ def build_sessions(sessions_data, drills_by_id, css, env, output_dir):
         minutes += [minutes_of(b.get("duration")) for b in session["blocks"]]
         session["total"] = f"{sum(minutes)} 分鐘" if all(m is not None for m in minutes) else None
         session["export_text"] = render_export_text(session, drills_by_id, sessions_data.get("export_defaults") or {})
+        warmup_minutes = minutes_of(session["warmup"].get("duration"))
+        if warmup_minutes is not None:
+            session["warmup"]["timer_seconds"] = warmup_minutes * 60
         for block in session["blocks"]:
             block["drill"] = drills_by_id[block["drill_id"]]
+            duration_minutes = minutes_of(block.get("duration"))
+            if duration_minutes is not None:
+                block["timer"] = build_block_timer(block, block["drill"], duration_minutes)
+        session["timeline"] = build_timeline(session)
 
         html = template.render(session=session, css=css)
         out_path = schedule_dir / f"{session['date']}.html"

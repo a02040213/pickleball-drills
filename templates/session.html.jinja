@@ -25,6 +25,7 @@
   <h1>匹克球課表（{{ session.label }}）</h1>
   <button id="copy-export-btn" type="button">複製文字</button>
   <span id="copy-export-status" aria-live="polite"></span>
+  {% if session.timeline %}<button id="start-timer-btn" type="button">開始訓練</button>{% endif %}
   <script>
   (function () {
     var text = {{ session.export_text | tojson }};
@@ -62,6 +63,25 @@
   </script>
 </div>
 
+{% if session.timeline %}
+<section id="timer-panel" hidden>
+  <div id="timer-fill"></div>
+  <p id="timer-progress"></p>
+  <p id="timer-phase-label"></p>
+  <div id="timer-diagram"></div>
+  <p id="timer-display">00:00</p>
+  <p id="timer-next-preview"></p>
+  <div id="timer-controls">
+    <button id="timer-pause-btn" type="button">暫停</button>
+    <button id="timer-prev-btn" type="button">上一項</button>
+    <button id="timer-skip-btn" type="button">跳到下一項</button>
+    <button id="timer-reset-btn" type="button">重置本節</button>
+    <button id="timer-stop-btn" type="button">結束訓練</button>
+  </div>
+</section>
+<script type="application/json" id="timer-timeline">{{ session.timeline | tojson }}</script>
+{% endif %}
+
 <section class="session-block warmup">
   <span class="time">{{ session.warmup.duration }}</span>
   <span class="name">熱身：{{ session.warmup.note }}</span>
@@ -71,7 +91,7 @@
 
 <ol class="session-list">
   {% for block in session.blocks %}
-  <li class="session-block">
+  <li class="session-block" data-block-index="{{ loop.index0 }}">
     <div class="drill-diagram">{{ block.drill.diagram_svg | safe }}</div>
     <div class="drill-text">
       {% if block.duration %}<span class="time">{{ block.duration }}</span>{% endif %}
@@ -87,4 +107,206 @@
 {% if session.total %}<p class="total">預估總時長：<b>{{ session.total }}</b></p>{% endif %}
 
 </div>
+{% if session.timeline %}
+<script>
+(function () {
+  var timelineEl = document.getElementById("timer-timeline");
+  var timeline = JSON.parse(timelineEl.textContent);
+  if (!timeline.length) return;
+
+  var startBtn = document.getElementById("start-timer-btn");
+  var panel = document.getElementById("timer-panel");
+  var progressEl = document.getElementById("timer-progress");
+  var phaseLabelEl = document.getElementById("timer-phase-label");
+  var diagramEl = document.getElementById("timer-diagram");
+  var displayEl = document.getElementById("timer-display");
+  var progressFillEl = document.getElementById("timer-fill");
+  var nextPreviewEl = document.getElementById("timer-next-preview");
+  var pauseBtn = document.getElementById("timer-pause-btn");
+  var prevBtn = document.getElementById("timer-prev-btn");
+  var resetBtn = document.getElementById("timer-reset-btn");
+  var skipBtn = document.getElementById("timer-skip-btn");
+  var stopBtn = document.getElementById("timer-stop-btn");
+
+  var warmupEl = document.querySelector(".session-block.warmup");
+  var blockEls = document.querySelectorAll(".session-list > li[data-block-index]");
+
+  var phaseIndex = 0;
+  var remaining = 0;
+  var running = false;
+  var tickHandle = null;
+  var wakeLock = null;
+
+  function blockTitle(blockIndex) {
+    var li = blockEls[blockIndex];
+    var name = li && li.querySelector(".name");
+    return name ? name.textContent.trim() : "";
+  }
+
+  function blockDiagramHtml(blockIndex) {
+    var li = blockEls[blockIndex];
+    var diagram = li && li.querySelector(".drill-diagram");
+    return diagram ? diagram.innerHTML : "";
+  }
+
+  function phaseLabel(phase) {
+    if (phase.type === "warmup") {
+      var name = warmupEl && warmupEl.querySelector(".name");
+      return name ? name.textContent.trim() : "熱身";
+    }
+    var title = blockTitle(phase.blockIndex);
+    if (phase.type === "briefing") return "說明：" + title;
+    return title + "（第 " + (phase.rotationIndex + 1) + " / " + phase.rotationsTotal + " 輪）";
+  }
+
+  function formatTime(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel(); // don't let cues queue up behind one another
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "en-US";
+    speechSynthesis.speak(utter);
+  }
+
+  function unlockSpeech() {
+    // iOS Safari only allows speechSynthesis after a direct user-gesture call;
+    // this silent warm-up call "unlocks" it for the timer-driven calls later.
+    if (!window.speechSynthesis) return;
+    var utter = new SpeechSynthesisUtterance(" ");
+    utter.volume = 0;
+    speechSynthesis.speak(utter);
+  }
+
+  function requestWakeLock() {
+    if (!navigator.wakeLock) return;
+    navigator.wakeLock.request("screen").then(function (lock) {
+      wakeLock = lock;
+    }).catch(function () { /* unsupported, or page not visible — ignore */ });
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) {
+      wakeLock.release();
+      wakeLock = null;
+    }
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (running && document.visibilityState === "visible") requestWakeLock();
+  });
+
+  function updateProgressBar() {
+    var total = timeline[phaseIndex].seconds || 1;
+    var pct = Math.min(100, Math.max(0, ((total - remaining) / total) * 100));
+    progressFillEl.style.width = pct + "%";
+  }
+
+  function renderPhase() {
+    var phase = timeline[phaseIndex];
+    progressEl.textContent = (phaseIndex + 1) + " / " + timeline.length;
+    phaseLabelEl.textContent = phaseLabel(phase);
+    var diagramHtml = phase.type === "warmup" ? "" : blockDiagramHtml(phase.blockIndex);
+    diagramEl.innerHTML = diagramHtml;
+    diagramEl.hidden = !diagramHtml;
+    displayEl.textContent = formatTime(remaining);
+    updateProgressBar();
+    var next = timeline[phaseIndex + 1];
+    nextPreviewEl.textContent = next ? "下一項：" + phaseLabel(next) : "這是最後一項";
+  }
+
+  function finish() {
+    stopTicking();
+    releaseWakeLock();
+    progressEl.textContent = timeline.length + " / " + timeline.length;
+    phaseLabelEl.textContent = "今天的訓練結束了！";
+    diagramEl.innerHTML = "";
+    diagramEl.hidden = true;
+    displayEl.textContent = "00:00";
+    progressFillEl.style.width = "100%";
+    nextPreviewEl.textContent = "";
+  }
+
+  function goToPhase(index) {
+    if (index >= timeline.length) {
+      finish();
+      return;
+    }
+    phaseIndex = Math.max(index, 0);
+    remaining = timeline[phaseIndex].seconds;
+    renderPhase();
+  }
+
+  function tick() {
+    remaining -= 1;
+    if (remaining === 30) speak("thirty seconds");
+    if (remaining === 10) speak("ten seconds");
+    if (remaining <= 0) {
+      speak("time");
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      goToPhase(phaseIndex + 1);
+      return;
+    }
+    displayEl.textContent = formatTime(remaining);
+    updateProgressBar();
+  }
+
+  function startTicking() {
+    running = true;
+    tickHandle = setInterval(tick, 1000);
+    pauseBtn.textContent = "暫停";
+  }
+
+  function stopTicking() {
+    running = false;
+    clearInterval(tickHandle);
+  }
+
+  startBtn.addEventListener("click", function () {
+    unlockSpeech();
+    startBtn.hidden = true;
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    goToPhase(0);
+    requestWakeLock();
+    startTicking();
+  });
+
+  pauseBtn.addEventListener("click", function () {
+    if (running) {
+      stopTicking();
+      pauseBtn.textContent = "繼續";
+    } else {
+      unlockSpeech();
+      startTicking();
+      requestWakeLock();
+    }
+  });
+
+  resetBtn.addEventListener("click", function () {
+    remaining = timeline[phaseIndex].seconds;
+    renderPhase();
+  });
+
+  prevBtn.addEventListener("click", function () {
+    goToPhase(phaseIndex - 1);
+  });
+
+  skipBtn.addEventListener("click", function () {
+    goToPhase(phaseIndex + 1);
+  });
+
+  stopBtn.addEventListener("click", function () {
+    stopTicking();
+    releaseWakeLock();
+    panel.hidden = true;
+    startBtn.hidden = false;
+  });
+})();
+</script>
+{% endif %}
 </body></html>

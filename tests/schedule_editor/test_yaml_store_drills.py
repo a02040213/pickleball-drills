@@ -144,3 +144,41 @@ def test_update_drill_clears_summary_when_blank(tmp_path):
     ])
     update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[], summary="")
     assert "summary" not in get_drill(path, 1)
+
+
+def test_update_drill_sets_default_rotations_and_briefing(tmp_path):
+    path = make_drills_file(tmp_path, [
+        {"code": "01", "title_zh": "A", "drills": [
+            {"id": 1, "title_zh": "x", "title_en": "x", "method": [], "points": [], "diagram_file": "diagrams/drill-01.svg"},
+        ]},
+    ])
+    update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[],
+                  default_rotations=6, default_briefing=3)
+    drill = get_drill(path, 1)
+    assert drill["default_rotations"] == 6
+    assert drill["default_briefing"] == 3
+
+
+def test_update_drill_clears_default_rotations_and_briefing_when_blank(tmp_path):
+    path = make_drills_file(tmp_path, [
+        {"code": "01", "title_zh": "A", "drills": [
+            {"id": 1, "title_zh": "x", "title_en": "x", "method": [], "points": [],
+             "diagram_file": "diagrams/drill-01.svg", "default_rotations": 6, "default_briefing": 3},
+        ]},
+    ])
+    update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[],
+                  default_rotations=None, default_briefing=None)
+    drill = get_drill(path, 1)
+    assert "default_rotations" not in drill
+    assert "default_briefing" not in drill
+
+
+def test_update_drill_keeps_default_briefing_of_zero(tmp_path):
+    path = make_drills_file(tmp_path, [
+        {"code": "01", "title_zh": "A", "drills": [
+            {"id": 1, "title_zh": "x", "title_en": "x", "method": [], "points": [], "diagram_file": "diagrams/drill-01.svg"},
+        ]},
+    ])
+    update_drill(path, 1, category_code="01", title_zh="x", title_en="x", method=[], points=[],
+                  default_briefing=0)
+    assert get_drill(path, 1)["default_briefing"] == 0
