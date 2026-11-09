@@ -1,15 +1,21 @@
 export_defaults:
-  header: '📋 {date} 匹克球課表 {label}'
+  header: 📋 {date} 匹克球課表 {label}
   base_url: https://a02040213.github.io/pickleball-drills/
-  footer: |-
-    收費 350/人 地點：羽神拍拍
+  footer: '收費 350/人 地點：羽神拍拍
+
     報名名單：
+
     1.Willy
+
     2.Sylvia
+
     3.
+
     4.
+
     5.
-    6.
+
+    6.'
 sessions:
 - date: '2026-11-06'
   label: cross dink, drop, reset, overhead
@@ -29,20 +35,30 @@ sessions:
 - date: '2026-11-13'
   label: volley, drive 基本動作，後場轉換與實戰模擬
   warmup:
-    duration: 10 分鐘
-    note: 兩兩一組熱身
+    duration: '0'
+    note: 不熱身
   rotation_note: 以下幾項，三人一組，兩人打一人休，輪三個組合
   blocks:
   - drill_id: 1
     duration: 20 分鐘
+    rotations: 3
+    briefing: 1
   - drill_id: 10
     duration: 20 分鐘
+    rotations: 3
+    briefing: 1
   - drill_id: 17
-    duration: 20 分鐘
+    duration: 30 分鐘
+    rotations: 6
+    briefing: 2
   - drill_id: 7
     duration: 20 分鐘
+    rotations: 3
+    briefing: 1
   - drill_id: 18
     duration: 30 分鐘
+    rotations: 6
+    briefing: 2
 - date: '2026-11-20'
   label: 丁克，加速與特殊球種
   warmup:
