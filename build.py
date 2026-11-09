@@ -3,6 +3,7 @@
 import argparse
 import re
 import shutil
+from datetime import date
 from pathlib import Path
 
 import yaml
@@ -190,13 +191,16 @@ def build_index(data, css, env, output_dir, sessions):
                 d = drill["diagram"]
                 drill["diagram_svg"] = render_diagram(d["a"], d["b"], d["ball"], d["move"], drill["id"])
 
+    today = date.today().isoformat()
+    upcoming_sessions = sorted((s for s in sessions if s["date"] >= today), key=lambda s: s["date"])
+    past_sessions = sorted((s for s in sessions if s["date"] < today), key=lambda s: s["date"], reverse=True)
+
     template = env.get_template("page.html.jinja")
     html = template.render(
         site=data["site"],
         categories=data["categories"],
-        schedule=data["schedule"],
-        optimizations=data["optimizations"],
-        sessions=sessions,
+        upcoming_sessions=upcoming_sessions,
+        past_sessions=past_sessions,
         css=css,
     )
     (output_dir / "index.html").write_text(html, encoding="utf-8")

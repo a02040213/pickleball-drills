@@ -2,12 +2,12 @@
 <html lang="zh-Hant"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>匹克球課表（{{ session.label }}）</title>
+<title>{{ session.date }} [{{ session.label }}]</title>
 <meta name="description" content="{{ session.date }} 匹克球課表：{{ session.label }}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:site_name" content="匹克球雙人訓練菜單">
-<meta property="og:title" content="匹克球課表（{{ session.label }}）">
+<meta property="og:title" content="{{ session.date }} [{{ session.label }}]">
 <meta property="og:description" content="{{ session.date }} 匹克球課表：{{ session.label }}">
 <meta property="og:url" content="https://a02040213.github.io/pickleball-drills/schedule/{{ session.date }}.html">
 <meta property="og:image" content="https://a02040213.github.io/pickleball-drills/og-image.png">
@@ -22,7 +22,7 @@
 
 <div class="hero">
   <p class="kicker">Session Schedule</p>
-  <h1>匹克球課表（{{ session.label }}）</h1>
+  <h1>{{ session.date }} [{{ session.label }}]</h1>
   <div class="hero-actions">
     <button id="copy-export-btn" type="button">複製文字</button>
     {% if session.timeline %}<button id="start-timer-btn" type="button">開始訓練</button>{% endif %}

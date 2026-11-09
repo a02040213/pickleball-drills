@@ -24,32 +24,33 @@
   <p>{{ site.subtitle }}</p>
 </div>
 
-{% if sessions %}
+{% if upcoming_sessions or past_sessions %}
 <section class="sessions-nav">
-  <h2>單日課表</h2>
+  <h2>即將進行的訓練</h2>
+  {% if upcoming_sessions %}
   <ul>
-    {% for s in sessions %}
-    <li><a href="schedule/{{ s.date }}.html">{{ s.label }} 課表</a></li>
+    {% for s in upcoming_sessions %}
+    <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }} 課表</a></li>
     {% endfor %}
   </ul>
+  {% endif %}
+  {% if past_sessions %}
+  <details class="past-sessions">
+    <summary>過去的訓練</summary>
+    <ul>
+      {% for s in past_sessions %}
+      <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }} 課表</a></li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
 </section>
 {% endif %}
-
-<section class="legend">
-  <h2>圖示說明</h2>
-  <ul>
-    <li><span class="swatch dot a"></span>綠點＝球員 A，<span class="swatch dot b"></span>藍點＝球員 B（位置由近到遠：廚房線 → 過渡區 → 底線）</li>
-    <li><span class="swatch line ball"></span>灰色線（直線／斜線／弧線）＝球路方向</li>
-    <li><span class="swatch line move"></span>紫色虛線＝該球員的站位移動方向（非球路）</li>
-  </ul>
-</section>
 
 <nav class="jump">
   {% for cat in categories %}
   <a href="#cat-{{ cat.code }}">{{ cat.code }} {{ cat.title_zh }}</a>
   {% endfor %}
-  <a href="#schedule">建議課表</a>
-  <a href="#optimizations">優化方向</a>
 </nav>
 
 {% for cat in categories %}
@@ -86,45 +87,6 @@
   {% endfor %}
 </section>
 {% endfor %}
-
-<section class="panel" id="schedule">
-  <h2>{{ schedule.title }}</h2>
-  <p class="intro">{{ schedule.intro }}</p>
-  <ol class="phase-list">
-    {% for phase in schedule.phases %}
-    <li>
-      <span class="time">{{ phase.time }}</span>
-      <span>
-        <span class="name">{{ phase.name }}</span>
-        <span class="drills">{{ phase.drills }}</span>
-      </span>
-    </li>
-    {% endfor %}
-  </ol>
-  <p class="total">建議總訓練時間：<b>{{ schedule.total }}</b></p>
-</section>
-
-<section class="panel" id="optimizations">
-  <h2>{{ optimizations.title }}</h2>
-  {% for item in optimizations.entries %}
-  <div class="opt-item">
-    <h3>{{ loop.index }}. {{ item.title }}</h3>
-    {% if item.body %}
-    <ul>
-      {% for line in item.body %}<li>{{ line }}</li>{% endfor %}
-    </ul>
-    {% endif %}
-    {% if item.closing %}<p class="closing">{{ item.closing }}</p>{% endif %}
-    {% if item.table %}
-    <table class="spec-table">
-      {% for row in item.table %}
-      <tr><th>{{ row.field }}</th><td>{{ row.content }}</td></tr>
-      {% endfor %}
-    </table>
-    {% endif %}
-  </div>
-  {% endfor %}
-</section>
 
 <p class="footer">課表大總表</p>
 </div>
