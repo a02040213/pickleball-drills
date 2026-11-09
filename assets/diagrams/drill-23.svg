@@ -58,6 +58,17 @@
    "label": "A",
    "team": "orange",
    "ghost": true
+  },
+  {
+   "type": "ball",
+   "x1": 19.75,
+   "y1": 25.25,
+   "x2": 3,
+   "y2": 20,
+   "curve": true,
+   "bend": 1,
+   "n": 3,
+   "dash": true
   }
  ]
 }</metadata>
@@ -68,5 +79,6 @@
 <path d="M16.25 29L19.03 27.96" fill="none" stroke="#ffffff" stroke-width="0.24" stroke-dasharray="0.7 0.55"/><polygon points="20.25,27.5 19.23,28.47 18.84,27.44" fill="#ffffff"/>
 <path d="M3.75 17.75Q9.81 25.34 18.2 25.91" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-dasharray="0.8 0.6"/><polygon points="19.5,26 18.17,26.46 18.24,25.36" fill="#e6f23a"/><circle cx="10.72" cy="23.61" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="10.72" y="23.61" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif">1</text>
 <path d="M22 24.75L19.43 6.04" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-linecap="round"/><polygon points="19.25,4.75 19.97,5.96 18.88,6.11" fill="#e6f23a"/><circle cx="20.63" cy="14.75" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="20.63" y="14.75" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif">2</text>
+<path d="M19.75 25.25Q12.53 18.94 4.29 19.86" fill="none" stroke="#e6f23a" stroke-width="0.3" stroke-dasharray="0.8 0.6"/><polygon points="3,20 4.23,19.31 4.35,20.4" fill="#e6f23a"/><circle cx="11.95" cy="20.78" r="0.85" fill="#1a1a1a" stroke="#e6f23a" stroke-width="0.12"/><text x="11.95" y="20.78" dy="0.35em" font-size="1.1" font-weight="700" fill="#e6f23a" text-anchor="middle" font-family="Arial, Helvetica, 'Helvetica Neue', sans-serif">3</text>
 </g>
 </svg>
