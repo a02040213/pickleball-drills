@@ -11,7 +11,6 @@ categories:
   - id: 1
     title_zh: 限制丁克
     title_en: Restricted Dink
-    default_rotations: 6
     diagram_file: diagrams/drill-01.svg
     diagram:
       a: kitchen
@@ -168,7 +167,6 @@ categories:
   - id: 9
     title_zh: 快手對截擊
     title_en: Fast Hands vs. Volley
-    default_rotations: 6
     diagram_file: diagrams/drill-09.svg
     diagram:
       a: kitchen
@@ -187,7 +185,6 @@ categories:
   - id: 10
     title_zh: 截擊手感控制
     title_en: Volley Hands Control
-    default_rotations: 6
     diagram_file: diagrams/drill-10.svg
     diagram:
       a: kitchen
@@ -252,7 +249,6 @@ categories:
   - id: 13
     title_zh: 高球攻擊對底線防守
     title_en: Overhead vs. Baseline Defense
-    default_briefing: 2
     diagram_file: diagrams/drill-13.svg
     diagram:
       a: baseline
@@ -287,6 +283,7 @@ categories:
     - 建立轉身、回追及重新定位的腳步能力。
     - 練習在被迫離開網前後重新組織防守。
     summary: 雙方正常丁克對打，輪流突然挑高球（Lob），被挑的人先讓球落地，再快速回追把球打回去。
+    default_briefing: 2
   - id: 15
     title_zh: 主動進攻方
     title_en: Initiator
@@ -327,21 +324,6 @@ categories:
     - 培養對球路、對手位置及空檔的判斷能力。
     - 避免在不適合的時機勉強進攻。
     summary: 雙方合作對打，覺得要打出致勝球前得先喊「Winner」：喊了有得分加 1 分、喊了沒得分扣 1 分、沒喊就得分不計分，先到 7 分獲勝。
-  - id: 23
-    title_zh: 教練送球 ATP
-    title_en: Coach-Fed ATP (Around The Post)
-    default_briefing: 2
-    method:
-    - 教練站在球場一側，持續送出偏外側的球，學員站在另一側準備。
-    - 學員先等球落下、越過網柱高度後再出手，不要急著打。
-    - 球落得越低、飛得越寬，角度越好；從網柱外側繞過球網，將球打回對方場地。
-    - 如果判斷位置不好打出ATP, 依狀況打cross dink
-    points:
-    - 耐心：等球落下，球飛得越寬，繞過網柱的角度越大。
-    - 腳步先移動到位，再穩定擊球，避免倉促揮拍。
-    - 注意正手與反拍落腳位置，保持身體平衡。
-    diagram_file: diagrams/drill-23.svg
-    summary: 一邊由教練送出外側（寬）球，學員練習等球落下、耐心拉開角度，從網柱外側打出 ATP。
 - code: '05'
   title_zh: 腳步與移動能力
   title_en: Footwork & Movement
@@ -370,7 +352,7 @@ categories:
     title_zh: 前五拍練習
     title_en: First Five Shots
     default_rotations: 6
-    default_briefing: 3
+    default_briefing: 2
     diagram_file: diagrams/drill-18.svg
     diagram:
       a: baseline
@@ -465,6 +447,27 @@ categories:
     - 建立從中性球轉為攻防對抗的能力。
     note: 此項是依照原本的「Dink、Speed up、Block」內容重新整理出的綜合版本，與第 12 項的技術分解練習用途不同。
     summary: 雙方從丁克開始，依實際來球自由選擇 Speed Up，對方練習 Block 或反擊，進入快手對抗直到該分結束——把丁克、Speed Up、Block、快手串在一起練。
+- code: '07'
+  title_zh: 送球
+  title_en: ''
+  focus: ''
+  drills:
+  - id: 23
+    title_zh: 教練送球 ATP
+    title_en: Coach-Fed ATP (Around The Post)
+    default_briefing: 2
+    method:
+    - 教練站在球場一側，持續送出偏外側的球，學員站在另一側準備。
+    - 學員先等球落下、越過網柱高度後再出手，不要急著打。
+    - 球落得越低、飛得越寬，角度越好；從網柱外側繞過球網，將球打回對方場地。
+    - 如果判斷位置不好打出ATP, 依狀況打cross dink
+    points:
+    - 耐心：等球落下，球飛得越寬，繞過網柱的角度越大。
+    - 腳步先移動到位，再穩定擊球，避免倉促揮拍。
+    - 注意正手與反拍落腳位置，保持身體平衡。
+    diagram_file: diagrams/drill-23.svg
+    summary: 一邊由教練送出外側（寬）球，學員練習等球落下、耐心拉開角度，從網柱外側打出 ATP。
+    default_rotations: 6
 schedule:
   title: 建議的實際課表編排
   intro: 如果這份資料是要拿來安排雙人訓練，建議不要單純照技術分類練習，而是依照球員在比賽中的實際發展順序安排。
