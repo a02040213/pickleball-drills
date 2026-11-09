@@ -11,6 +11,7 @@ categories:
   - id: 1
     title_zh: 限制丁克
     title_en: Restricted Dink
+    default_rotations: 6
     diagram_file: diagrams/drill-01.svg
     diagram:
       a: kitchen
@@ -28,6 +29,7 @@ categories:
   - id: 2
     title_zh: 正反拍交叉丁克
     title_en: Forehand / Backhand Cross Dink
+    default_rotations: 6
     diagram_file: diagrams/drill-02.svg
     diagram:
       a: kitchen
@@ -46,6 +48,7 @@ categories:
   - id: 3
     title_zh: 伸縮丁克
     title_en: Slinky
+    default_briefing: 2
     diagram_file: diagrams/drill-03.svg
     diagram:
       a: kitchen
@@ -140,6 +143,7 @@ categories:
   - id: 8
     title_zh: 逐步上網
     title_en: Work-Up
+    default_briefing: 2
     diagram_file: diagrams/drill-08.svg
     diagram:
       a: baseline
@@ -164,6 +168,7 @@ categories:
   - id: 9
     title_zh: 快手對截擊
     title_en: Fast Hands vs. Volley
+    default_rotations: 6
     diagram_file: diagrams/drill-09.svg
     diagram:
       a: kitchen
@@ -182,6 +187,7 @@ categories:
   - id: 10
     title_zh: 截擊手感控制
     title_en: Volley Hands Control
+    default_rotations: 6
     diagram_file: diagrams/drill-10.svg
     diagram:
       a: kitchen
@@ -201,6 +207,7 @@ categories:
   - id: 11
     title_zh: 死丁克快手
     title_en: Dead Dink Hands
+    default_briefing: 2
     diagram_file: diagrams/drill-11.svg
     diagram:
       a: kitchen
@@ -245,6 +252,7 @@ categories:
   - id: 13
     title_zh: 高球攻擊對底線防守
     title_en: Overhead vs. Baseline Defense
+    default_briefing: 2
     diagram_file: diagrams/drill-13.svg
     diagram:
       a: baseline
@@ -300,6 +308,7 @@ categories:
   - id: 16
     title_zh: 勝利球判斷
     title_en: Winner
+    default_briefing: 3
     diagram_file: diagrams/drill-16.svg
     diagram:
       a: kitchen
@@ -321,6 +330,7 @@ categories:
   - id: 23
     title_zh: 教練送球 ATP
     title_en: Coach-Fed ATP (Around The Post)
+    default_briefing: 2
     method:
     - 教練站在球場一側，持續送出偏外側的球，學員站在另一側準備。
     - 學員先等球落下、越過網柱高度後再出手，不要急著打。
@@ -359,6 +369,8 @@ categories:
   - id: 18
     title_zh: 前五拍練習
     title_en: First Five Shots
+    default_rotations: 6
+    default_briefing: 3
     diagram_file: diagrams/drill-18.svg
     diagram:
       a: baseline
@@ -381,6 +393,7 @@ categories:
   - id: 19
     title_zh: 7-11
     title_en: 7-11
+    default_briefing: 2
     diagram:
       a: null
       b: null
@@ -397,6 +410,7 @@ categories:
   - id: 20
     title_zh: Dingles
     title_en: Dingles
+    default_briefing: 2
     diagram_file: diagrams/drill-20.svg
     diagram:
       a: baseline
@@ -415,6 +429,7 @@ categories:
   - id: 21
     title_zh: 丁克丁克 Bang
     title_en: Dink Dink Bang
+    default_briefing: 2
     diagram_file: diagrams/drill-21.svg
     diagram:
       a: kitchen
