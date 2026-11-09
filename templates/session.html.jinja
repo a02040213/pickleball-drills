@@ -23,9 +23,11 @@
 <div class="hero">
   <p class="kicker">Session Schedule</p>
   <h1>匹克球課表（{{ session.label }}）</h1>
-  <button id="copy-export-btn" type="button">複製文字</button>
+  <div class="hero-actions">
+    <button id="copy-export-btn" type="button">複製文字</button>
+    {% if session.timeline %}<button id="start-timer-btn" type="button">開始訓練</button>{% endif %}
+  </div>
   <span id="copy-export-status" aria-live="polite"></span>
-  {% if session.timeline %}<button id="start-timer-btn" type="button">開始訓練</button>{% endif %}
   <script>
   (function () {
     var text = {{ session.export_text | tojson }};
