@@ -30,7 +30,7 @@
   {% if upcoming_sessions %}
   <ul>
     {% for s in upcoming_sessions %}
-    <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }} 課表</a></li>
+    <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
@@ -39,7 +39,7 @@
     <summary>過去的訓練</summary>
     <ul>
       {% for s in past_sessions %}
-      <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }} 課表</a></li>
+      <li><a href="schedule/{{ s.date }}.html">{{ s.date }} {{ s.label }}</a></li>
       {% endfor %}
     </ul>
   </details>
