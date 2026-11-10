@@ -468,6 +468,19 @@ categories:
     diagram_file: diagrams/drill-23.svg
     summary: 一邊由教練送出外側（寬）球，學員練習等球落下、耐心拉開角度，從網柱外側打出 ATP。
     default_rotations: 6
+  - id: 24
+    title_zh: 教練送球前排攻擊
+    title_en: Coach-Fed kitchen line attack
+    method:
+    - 教練站在球場一側，持續丟出高球，學員站在另一側廚房線準備。
+    - 抱持在胸口或以上位置打到球，看狀況加壓
+    points:
+    - 腳步先移動到位，再穩定擊球，避免倉促揮拍。
+    - 注意正手與反拍落腳位置，保持身體平衡。
+    diagram_file: diagrams/drill-24.svg
+    summary: 一邊由教練丟出高球，學員從廚房線發動攻擊
+    default_rotations: 4
+    default_briefing: 2
 schedule:
   title: 建議的實際課表編排
   intro: 如果這份資料是要拿來安排雙人訓練，建議不要單純照技術分類練習，而是依照球員在比賽中的實際發展順序安排。
