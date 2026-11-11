@@ -47,14 +47,14 @@ sessions:
     duration: 20 分鐘
     rotations: 3
     briefing: 1
+  - drill_id: 24
+    duration: 20 分鐘
+    rotations: 4
+    briefing: 2
   - drill_id: 17
     duration: 30 分鐘
     rotations: 6
     briefing: 2
-  - drill_id: 7
-    duration: 20 分鐘
-    rotations: 3
-    briefing: 1
   - drill_id: 18
     duration: 30 分鐘
     rotations: 6
