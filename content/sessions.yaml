@@ -87,10 +87,10 @@ sessions:
     rotations: 3
     briefing: 2
 - date: '2026-11-27'
-  label: volley, drive 基本動作，後場轉換與實戰模擬
+  label: volley 基本動作，前後場轉換與實戰模擬
   warmup:
     duration: '10'
-    note: 不熱身
+    note: 兩兩一組熱身
   rotation_note: 以下幾項，三人一組，兩人打一人休，輪三個組合
   blocks:
   - drill_id: 1
