@@ -86,3 +86,30 @@ sessions:
     duration: 20 分鐘
     rotations: 3
     briefing: 2
+- date: '2026-11-27'
+  label: volley, drive 基本動作，後場轉換與實戰模擬
+  warmup:
+    duration: '10'
+    note: 不熱身
+  rotation_note: 以下幾項，三人一組，兩人打一人休，輪三個組合
+  blocks:
+  - drill_id: 1
+    duration: 20 分鐘
+    rotations: 3
+    briefing: 1
+  - drill_id: 10
+    duration: 20 分鐘
+    rotations: 3
+    briefing: 1
+  - drill_id: 5
+    duration: 20 分鐘
+    rotations: 3
+    briefing: 1
+  - drill_id: 6
+    duration: 20 分鐘
+    rotations: 3
+    briefing: 1
+  - drill_id: 18
+    duration: 30 分鐘
+    rotations: 6
+    briefing: 2
